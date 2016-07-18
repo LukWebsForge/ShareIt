@@ -1,0 +1,35 @@
+<idea-plugin version="2">
+    <id>de.lukweb.hasteit</id>
+    <name>HasteIt</name>
+    <version>1.0</version>
+    <vendor email="info@lukweb.de" url="http://www.lukweb.de">LukWeb</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+    </change-notes>
+
+    <idea-version since-build="141.0"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+
+    <actions>
+        <action id="de.lukweb.hasteit.MenuHaste" class="de.lukweb.hasteit.MenuHaste" text="Haste it!"
+                description="Share your selected text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="FileMenu" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>
