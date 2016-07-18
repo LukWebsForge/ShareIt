@@ -1,19 +1,18 @@
 <idea-plugin version="2">
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <version>1.0</version>
+    <version>1.01</version>
     <vendor email="info@lukweb.de" url="http://www.lukweb.de">LukWeb</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      With HasteIt you can quickly share your current file or selected text to
+       <a href="http://hastebin.com">Hastebin</a>.
     ]]></description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      Updated description
     ]]>
     </change-notes>
 
