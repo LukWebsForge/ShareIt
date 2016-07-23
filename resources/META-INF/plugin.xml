@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <version>1.01</version>
+    <version>1.02</version>
     <vendor email="info@lukweb.de" url="http://www.lukweb.de">LukWeb</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-      Updated description
+      Removed HasteIt! from the file menu. You can find it in the context menu or in the tools menu.
     ]]>
     </change-notes>
 
@@ -27,7 +27,6 @@
                 description="Share your selected text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <add-to-group group-id="FileMenu" anchor="last"/>
         </action>
     </actions>
 
