@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <version>1.02</version>
+    <version>1.03</version>
     <vendor email="info@lukweb.de" url="http://www.lukweb.de/hasteit">LukWeb</vendor>
 
     <depends>com.intellij.modules.platform</depends>
