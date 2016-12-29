@@ -1,5 +1,7 @@
 package de.lukweb.hasteit;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
@@ -103,36 +105,33 @@ public class MenuHaste extends AnAction {
 
     private String saveTextToHastebin(String text) {
         try {
-            String url = "http://www.hastebin.com/documents";
+            String url = "https://hastebin.com/documents";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-            //add reuqest header
+            // Add a reuqest header
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            // Send post request
+            // Send the post request
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(text);
             wr.flush();
             wr.close();
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            while ((inputLine = in.readLine()) != null) response.append(inputLine);
             in.close();
 
-            //print result
-
-            String[] split = response.toString().split(":");
-            return split[1].replaceAll("}", "").replace("{", "").replaceAll("\"", "");
+            // Get the id of the haste
+            JsonElement json = new JsonParser().parse(response.toString());
+            if (!json.isJsonObject()) throw new IOException("Cannot parse JSON");
+            return json.getAsJsonObject().get("key").getAsString();
 
         } catch (IOException e) {
             err("Error while uploading: " + e.getLocalizedMessage());

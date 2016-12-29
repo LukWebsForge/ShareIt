@@ -2,7 +2,7 @@
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
     <version>1.02</version>
-    <vendor email="info@lukweb.de" url="http://www.lukweb.de">LukWeb</vendor>
+    <vendor email="info@lukweb.de" url="http://www.lukweb.de/hasteit">LukWeb</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
