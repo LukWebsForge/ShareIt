@@ -20,7 +20,15 @@ dependencies {
 intellij {
     version '2017.1.4' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
     pluginName 'HasteIt'
+    intellij.updateSinceUntilBuild false //Disables updating since-build attribute in plugin.xml
+
+    // Publishing with gradle.properties:
+    // http://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/deployment.html
+    publish {
+        apply from: "gradle.properties"
+    }
 }
+
 patchPluginXml {
     changeNotes """
       <ul>

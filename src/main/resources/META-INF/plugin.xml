@@ -1,14 +1,15 @@
 <idea-plugin>
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <version>1.05</version>
     <vendor email="info@lukweb.de" url="https://github.com/LukWebsForge/HasteIt">LukWeb</vendor>
-
 
     <description><![CDATA[
       With HasteIt you can quickly share your current file or selected text to
        <a href="http://hastebin.com">Hastebin</a>.
     ]]></description>
+
+    <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
+    <idea-version since-build="171"/>
 
     <!-- Depends tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
