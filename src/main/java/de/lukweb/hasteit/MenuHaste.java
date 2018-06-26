@@ -15,16 +15,19 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.event.HyperlinkEvent.EventType;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import javax.swing.event.HyperlinkEvent.EventType;
+import org.jetbrains.annotations.NotNull;
 
 public class MenuHaste extends AnAction {
 

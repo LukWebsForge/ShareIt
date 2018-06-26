@@ -1,29 +1,25 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <version>1.03</version>
-    <vendor email="info@lukweb.de" url="http://www.lukweb.de/hasteit">LukWeb</vendor>
+    <version>1.05</version>
+    <vendor email="info@lukweb.de" url="https://github.com/LukWebsForge/HasteIt">LukWeb</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
 
     <description><![CDATA[
       With HasteIt you can quickly share your current file or selected text to
        <a href="http://hastebin.com">Hastebin</a>.
     ]]></description>
 
-    <change-notes><![CDATA[
-      Removed HasteIt! from the file menu. You can find it in the context menu or in the tools menu.
-    ]]>
-    </change-notes>
-
-    <idea-version since-build="141.0"/>
+    <!-- Depends tag for compatibility wih all products:
+         http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-
+        <!-- Add your extensions here -->
     </extensions>
 
     <actions>
-        <action id="de.lukweb.hasteit.MenuHaste" class="de.lukweb.hasteit.MenuHaste" text="Haste it!"
+        <action id="de.lukweb.de.lukweb.hasteit.MenuHaste" class="de.lukweb.hasteit.MenuHaste" text="Haste it!"
                 description="Share your selected text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>

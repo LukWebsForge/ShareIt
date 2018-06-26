@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.jetbrains.intellij' version '0.3.4'
+}
+
+group 'de.lukweb'
+version '1.05'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+intellij {
+    version '2017.1.4' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
+    pluginName 'HasteIt'
+}
+patchPluginXml {
+    changeNotes """
+      <ul>
+      <li>Improved handling of Unicode characters (thanks <a href="https://github.com/udozockt">@udozockt</a>)</li>
+      <li>Using Gradle for building the plugin</li>
+      </ul>
+      """
+}
