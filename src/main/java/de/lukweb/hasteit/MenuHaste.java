@@ -70,7 +70,7 @@ public class MenuHaste extends AnAction {
                     return;
                 }
 
-                String fullHastebinUrl = "http://hastebin.com/" + hasteCode + "." + psiFile.getFileType().getDefaultExtension();
+                String fullHastebinUrl = "https://hastebin.com/" + hasteCode + "." + psiFile.getFileType().getDefaultExtension();
 
                 copyToClipboard(fullHastebinUrl);
 
