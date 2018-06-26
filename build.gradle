@@ -25,7 +25,9 @@ intellij {
     // Publishing with gradle.properties:
     // http://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/deployment.html
     publish {
-        apply from: "gradle.properties"
+        if (new File("gradle.properties").exists()) {
+            apply from: "gradle.properties"
+        }
     }
 }
 
