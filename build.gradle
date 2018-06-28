@@ -34,6 +34,6 @@ patchPluginXml {
 
 publishPlugin {
     // Publishing with gradle.properties
-    username publishUsername
-    password publishPassword
+    username project.ext.properties.publishUsername
+    password project.ext.properties.publishPassword
 }
