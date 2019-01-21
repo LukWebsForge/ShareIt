@@ -1,0 +1,68 @@
+package de.lukweb.hasteit;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.intellij.openapi.components.ServiceManager;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class HasteUploader {
+
+    public static HasteUploader getInstance() {
+        return ServiceManager.getService(HasteUploader.class);
+    }
+
+    private HasteSettings settings;
+
+    public HasteUploader(HasteSettings settings) {
+        this.settings = settings;
+    }
+
+    public void upload(String content, String extension, Result result) {
+        try {
+            URL obj = new URL(settings.getUploadUrl());
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+            // Add a reuqest header
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+            // Send the post request
+            con.setDoOutput(true);
+            BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            wr.write(content);
+            wr.flush();
+            wr.close();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) response.append(inputLine);
+            in.close();
+
+            // Get the id of the haste
+            JsonElement json = new JsonParser().parse(response.toString());
+            if (!json.isJsonObject()) {
+                throw new IOException("Can't parse JSON");
+            }
+
+            String hasteCode = json.getAsJsonObject().get("key").getAsString();
+            result.onSuccess(settings.getFileUrl(hasteCode, extension));
+        } catch (IOException e) {
+            result.onFailture(e);
+        }
+    }
+
+    interface Result {
+
+        void onSuccess(String hasteUrl);
+
+        void onFailture(IOException ex);
+
+    }
+
+}

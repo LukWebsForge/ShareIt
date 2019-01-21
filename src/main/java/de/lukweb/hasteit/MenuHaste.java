@@ -1,7 +1,5 @@
 package de.lukweb.hasteit;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
@@ -15,23 +13,28 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.psi.PsiFile;
-import java.awt.*;
+import org.jetbrains.annotations.NotNull;
+
+import javax.swing.event.HyperlinkEvent.EventType;
+import java.awt.Desktop;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
-import javax.swing.event.HyperlinkEvent.EventType;
-import org.jetbrains.annotations.NotNull;
 
 public class MenuHaste extends AnAction {
 
-    private static final NotificationGroup notificationGroup = new NotificationGroup("HasteIt", NotificationDisplayType.BALLOON, false);
+    private static final NotificationGroup notificationGroup =
+            new NotificationGroup("HasteIt", NotificationDisplayType.BALLOON, false);
+
+    private HasteUploader uploader;
+
+    public MenuHaste() {
+        super("Uploads your current selection to hastebin");
+        this.uploader = HasteUploader.getInstance();
+    }
 
     @Override
     public void actionPerformed(AnActionEvent event) {
@@ -39,21 +42,21 @@ public class MenuHaste extends AnAction {
         PsiFile psiFile = event.getData(CommonDataKeys.PSI_FILE);
 
         if (psiFile == null) {
-            err("No file is selected!");
+            errorNotification("No file is selected!");
             return;
         }
 
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
 
         if (editor == null) {
-            err("There's no editor!");
+            errorNotification("There's no editor!");
             return;
         }
 
         SelectionModel selectionModel = editor.getSelectionModel();
 
         if (!selectionModel.hasSelection()) {
-            err("No text is selected!");
+            errorNotification("No text is selected!");
             return;
         }
 
@@ -61,82 +64,50 @@ public class MenuHaste extends AnAction {
 
         ProgressManager.getInstance().run(new Task.Backgroundable(event.getProject(), "Uploading to Hastebin") {
             @Override
-            public void run(@NotNull ProgressIndicator progressIndicator) {
-                progressIndicator.setIndeterminate(true);
-                String hasteCode = saveTextToHastebin(text);
+            public void run(@NotNull ProgressIndicator indicator) {
+                indicator.setIndeterminate(true);
+                uploader.upload(text, psiFile.getFileType().getDefaultExtension(), new HasteUploader.Result() {
+                    @Override
+                    public void onSuccess(String hasteUrl) {
+                        copyToClipboard(hasteUrl);
+                        notifySuccess(hasteUrl);
+                        indicator.cancel();
+                    }
 
-                if (hasteCode == null) {
-                    progressIndicator.cancel();
-                    return;
-                }
-
-                String fullHastebinUrl = "https://hastebin.com/" + hasteCode + "." + psiFile.getFileType().getDefaultExtension();
-
-                copyToClipboard(fullHastebinUrl);
-
-                notificationGroup.createNotification(
-                        "HasteIt",
-                        "Upload successful! Copied to clipboard! <a href=\"" + fullHastebinUrl + "\">Open in Browser</a> ",
-                        NotificationType.INFORMATION,
-                        (notification, hyperlinkEvent) -> {
-                            if (!hyperlinkEvent.getEventType().equals(EventType.ACTIVATED)) return;
-                            openURL(hyperlinkEvent.getURL());
-                        }
-
-                ).notify(null);
-
-                progressIndicator.cancel();
+                    @Override
+                    public void onFailture(IOException ex) {
+                        errorNotification(ex.getClass().getName() + " while uploading: " + ex.getMessage());
+                        indicator.cancel();
+                    }
+                });
             }
         });
 
     }
 
-    private void show(String text) {
-        show(text, NotificationType.INFORMATION);
+    private void notifySuccess(String url) {
+        notificationGroup.createNotification(
+                "HasteIt",
+                "Upload successful! Copied to clipboard! <a href=\"" + url + "\">Open in Browser</a> ",
+                NotificationType.INFORMATION,
+                (notification, hyperlinkEvent) -> {
+                    if (!hyperlinkEvent.getEventType().equals(EventType.ACTIVATED)) return;
+                    openURL(hyperlinkEvent.getURL());
+                }
+
+        ).notify(null);
     }
 
-    private void err(String text) {
-        show(text, NotificationType.ERROR);
+    private void showNotification(String text) {
+        showNotification(text, NotificationType.INFORMATION);
     }
 
-    private void show(String text, NotificationType type) {
+    private void errorNotification(String text) {
+        showNotification(text, NotificationType.ERROR);
+    }
+
+    private void showNotification(String text, NotificationType type) {
         notificationGroup.createNotification(text, type).notify(null);
-    }
-
-    private String saveTextToHastebin(String text) {
-        try {
-            String url = "https://hastebin.com/documents";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            // Add a reuqest header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-            // Send the post request
-            con.setDoOutput(true);
-            BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
-            wr.write(text);
-            wr.flush();
-            wr.close();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) response.append(inputLine);
-            in.close();
-
-            // Get the id of the haste
-            JsonElement json = new JsonParser().parse(response.toString());
-            if (!json.isJsonObject()) throw new IOException("Cannot parse JSON");
-            return json.getAsJsonObject().get("key").getAsString();
-
-        } catch (IOException e) {
-            err("Error while uploading: " + e.getLocalizedMessage());
-        }
-        return null;
     }
 
     private void copyToClipboard(String text) {

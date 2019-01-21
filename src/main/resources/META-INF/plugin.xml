@@ -17,6 +17,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <projectConfigurable groupId="tools" instance="de.lukweb.hasteit.HasteSettingsPage"/>
+        <applicationService serviceImplementation="de.lukweb.hasteit.HasteSettings"/>
+        <applicationService serviceImplementation="de.lukweb.hasteit.HasteUploader"/>
     </extensions>
 
     <actions>
