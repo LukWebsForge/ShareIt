@@ -37,7 +37,7 @@ public class MenuHaste extends AnAction {
     }
 
     @Override
-    public void actionPerformed(AnActionEvent event) {
+    public void actionPerformed(@NotNull AnActionEvent event) {
 
         PsiFile psiFile = event.getData(CommonDataKeys.PSI_FILE);
 
@@ -47,26 +47,26 @@ public class MenuHaste extends AnAction {
         }
 
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
+        String text = psiFile.getText();
 
-        if (editor == null) {
-            errorNotification("There's no editor!");
+        if (editor != null) {
+            SelectionModel selectionModel = editor.getSelectionModel();
+
+            if (selectionModel.hasSelection()) {
+                text = selectionModel.getSelectedText();
+            }
+        }
+
+        if (text == null || text.equalsIgnoreCase("")) {
             return;
         }
 
-        SelectionModel selectionModel = editor.getSelectionModel();
-
-        if (!selectionModel.hasSelection()) {
-            errorNotification("No text is selected!");
-            return;
-        }
-
-        String text = selectionModel.getSelectedText();
-
+        String finalText = text;
         ProgressManager.getInstance().run(new Task.Backgroundable(event.getProject(), "Uploading to Hastebin") {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(true);
-                uploader.upload(text, psiFile.getFileType().getDefaultExtension(), new HasteUploader.Result() {
+                uploader.upload(finalText, psiFile.getFileType().getDefaultExtension(), new HasteUploader.Result() {
                     @Override
                     public void onSuccess(String hasteUrl) {
                         copyToClipboard(hasteUrl);
@@ -88,7 +88,7 @@ public class MenuHaste extends AnAction {
     private void notifySuccess(String url) {
         notificationGroup.createNotification(
                 "HasteIt",
-                "Upload successful! Copied to clipboard! <a href=\"" + url + "\">Open in Browser</a> ",
+                "Upload successful, copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
                 NotificationType.INFORMATION,
                 (notification, hyperlinkEvent) -> {
                     if (!hyperlinkEvent.getEventType().equals(EventType.ACTIVATED)) return;
