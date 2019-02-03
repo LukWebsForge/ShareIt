@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.lukweb'
-version '1.06'
+version '1.07'
 
 sourceCompatibility = 1.8
 
@@ -26,6 +26,8 @@ intellij {
 patchPluginXml {
     changeNotes """
       <ul>
+      <li>Fresh icons</li>
+      <li>Share from the file explorer or without a selection</li>
       <li>You can now use your custom hastebin instance. Go to settings -> tools -> HasteIt</li>
       </ul>
       """
