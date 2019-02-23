@@ -27,6 +27,7 @@
                 description="Share your (selected) text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
