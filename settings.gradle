@@ -1,1 +1,5 @@
-rootProject.name = 'HasteIt'
+rootProject.name = 'ShareIt'
+include 'HasteIt'
+include 'DiscordBeam'
+include 'ShareBase'
+

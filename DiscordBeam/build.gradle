@@ -1,0 +1,11 @@
+version '1.01'
+
+intellij {
+    pluginName 'DiscordBeam'
+}
+
+patchPluginXml {
+    changeNotes """
+      The first version.
+      """
+}

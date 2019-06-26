@@ -1,41 +1,46 @@
 plugins {
-    id 'java'
-    id 'idea'
-    id 'org.jetbrains.intellij' version '0.4.9'
+    id 'org.jetbrains.intellij' version '0.4.9' apply false
 }
 
-group 'de.lukweb'
-version '1.08'
+group = 'de.lukweb.share'
+version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+// The default configuration for every submodule
+subprojects {
 
-repositories {
-    mavenCentral()
+    apply plugin: 'java'
+    group = 'de.lukweb.share'
+    
+    repositories {
+        mavenCentral()
+    }
+    
+    sourceCompatibility = 1.8
+    
+    dependencies {
+        testImplementation group: 'junit', name: 'junit', version: '4.12'
+    }
+    
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
+// All of the default configuration for the Intellij plugins
+configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam'}) {
 
-intellij {
-    version '2018.3.3' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
-    pluginName 'HasteIt'
-    updateSinceUntilBuild false // Disables updating until-build attribute in plugin.xml
-}
+    apply plugin: 'org.jetbrains.intellij'
 
-patchPluginXml {
-    changeNotes """
-      <ul>
-      <li>Added a HasteIt button in the editor popup menu</li>
-      <li>Fresh icons</li>
-      <li>Share from the file explorer or without a selection</li>
-      <li>You can now use your custom hastebin instance. Go to settings -> tools -> HasteIt</li>
-      </ul>
-      """
-}
+    dependencies {
+        implementation project(':ShareBase')
+    }
 
-publishPlugin {
-    // Publishing with gradle.properties
-    username project.ext.properties.publishUsername
-    token project.ext.properties.publishToken
+    intellij {
+        version '2018.3.3' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
+        updateSinceUntilBuild false // Disables updating until-build attribute in plugin.xml
+    }
+
+    publishPlugin {
+        // Publishing with gradle.properties
+        username project.ext.properties.publishUsername
+        token project.ext.properties.publishToken
+    }
+    
 }

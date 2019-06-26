@@ -1,0 +1,16 @@
+version '1.08'
+
+intellij {
+    pluginName 'HasteIt'
+}
+
+patchPluginXml {
+    changeNotes """
+      <ul>
+      <li>Added a HasteIt button in the editor popup menu</li>
+      <li>Fresh icons</li>
+      <li>Share from the file explorer or without a selection</li>
+      <li>You can now use your custom hastebin instance. Go to settings -> tools -> HasteIt</li>
+      </ul>
+      """
+}
