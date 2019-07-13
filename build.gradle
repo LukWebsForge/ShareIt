@@ -26,10 +26,10 @@ intellij {
 patchPluginXml {
     changeNotes """
       <ul>
+      <li>Fixes the invalid button text</li>
       <li>Added a HasteIt button in the editor popup menu</li>
       <li>Fresh icons</li>
       <li>Share from the file explorer or without a selection</li>
-      <li>You can now use your custom hastebin instance. Go to settings -> tools -> HasteIt</li>
       </ul>
       """
 }

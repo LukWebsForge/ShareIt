@@ -16,8 +16,7 @@ import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.event.HyperlinkEvent.EventType;
-import java.awt.Desktop;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
@@ -32,7 +31,6 @@ public class MenuHaste extends AnAction {
     private HasteUploader uploader;
 
     public MenuHaste() {
-        super("Uploads your current selection to hastebin");
         this.uploader = HasteUploader.getInstance();
     }
 
