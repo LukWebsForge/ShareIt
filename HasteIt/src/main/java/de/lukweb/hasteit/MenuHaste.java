@@ -32,7 +32,6 @@ public class MenuHaste extends AnAction {
     private HasteUploader uploader;
 
     public MenuHaste() {
-        super("Uploads your current selection to hastebin");
         this.uploader = HasteUploader.getInstance();
     }
 
