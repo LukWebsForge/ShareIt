@@ -1,4 +1,4 @@
 package de.lukweb.share;
 
-public class ShareSettingsState {
+public interface ShareSettingsState {
 }

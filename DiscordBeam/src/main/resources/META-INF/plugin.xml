@@ -1,11 +1,10 @@
 <idea-plugin>
-    <id>de.lukweb.hasteit</id>
-    <name>HasteIt</name>
+    <id>de.lukweb.discordbeam</id>
+    <name>DiscordBeam</name>
     <vendor email="info@lukweb.de" url="https://github.com/LukWebsForge/HasteIt">LukWeb</vendor>
 
     <description><![CDATA[
-      With HasteIt you can quickly share your current file or selected text to
-       <a href="http://hastebin.com">Hastebin</a>.
+    Share files and code with one click to Discord.
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
@@ -14,17 +13,19 @@
     <!-- Depends tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends optional="true" config-file="plugin-github.xml">org.jetbrains.plugins.github</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable groupId="tools" instance="de.lukweb.hasteit.HasteSettingsPage"/>
-        <applicationService serviceImplementation="de.lukweb.hasteit.HasteSettings"/>
-        <applicationService serviceImplementation="de.lukweb.hasteit.HasteUploader"/>
+        <projectConfigurable id="discordbeam" displayName="Discord Beam" groupId="tools"
+                             instance="de.lukweb.discordbeam.DiscordSettingsPage"/>
+        <applicationService serviceImplementation="de.lukweb.discordbeam.DiscordSettings"/>
+        <applicationService serviceImplementation="de.lukweb.discordbeam.DiscordUploader"/>
     </extensions>
 
     <actions>
-        <action id="HasteIt.Share" class="de.lukweb.hasteit.HasteMenu" text="Haste it!"
-                description="Share your (selected) text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
+        <action id="DiscordBeam.Share" class="de.lukweb.discordbeam.DiscordMenu" text="Beam to Discord"
+                description="Share your (selected) text to Discord!" icon="DiscordBeamIcons.UPLOAD_ACTION">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>

@@ -1,6 +1,8 @@
 package de.lukweb.hasteit;
 
-public class HasteSettingsState {
+import de.lukweb.share.ShareSettingsState;
+
+public class HasteSettingsState implements ShareSettingsState {
 
     private String customUrl = null;
 

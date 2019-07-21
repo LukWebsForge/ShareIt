@@ -1,0 +1,7 @@
+<idea-plugin>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="de.lukweb.discordbeam.GistUploader"/>
+    </extensions>
+
+</idea-plugin>

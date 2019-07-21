@@ -1,15 +1,9 @@
 package de.lukweb.hasteit;
 
-import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import de.lukweb.share.ShareSettings;
 
 @State(
         name = "HasteSettings",
@@ -17,36 +11,18 @@ import java.net.URL;
                 value = "hasteSettings.xml"
         )
 )
-public class HasteSettings implements PersistentStateComponent<HasteSettingsState> {
+public class HasteSettings extends ShareSettings<HasteSettingsState> {
 
     public static HasteSettings getInstance() {
         return ServiceManager.getService(HasteSettings.class);
     }
 
-    private HasteSettingsState settingsState;
-
     public HasteSettings() {
-        settingsState = new HasteSettingsState();
-    }
-
-    @Nullable
-    @Override
-    public HasteSettingsState getState() {
-        return settingsState;
-    }
-
-    @Override
-    public void loadState(@NotNull HasteSettingsState state) {
-        this.settingsState = state;
-    }
-
-    @Override
-    public void noStateLoaded() {
-        settingsState = new HasteSettingsState();
+        super(HasteSettingsState.class);
     }
 
     public String getCustomUrl() {
-        return settingsState.getCustomUrl();
+        return getState().getCustomUrl();
     }
 
     public String getBaseUrl() {
@@ -65,30 +41,13 @@ public class HasteSettings implements PersistentStateComponent<HasteSettingsStat
     }
 
     public void setBaseUrl(String url) {
+        // Trims the last slash:
+        // A url without a slash at the end is needed, because we append a path to the url.
         if (url != null && url.endsWith("/")) {
             url = url.substring(0, url.length() - 1);
         }
 
-        settingsState.setCustomUrl(url);
+        getState().setCustomUrl(url);
     }
 
-    public String checkUrl(String url) {
-        url = url.trim().toLowerCase();
-        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-            return "Your url must start with http:// or https://";
-        }
-
-        if (url.contains(" ")) {
-            return "Your url may not contain spaces";
-        }
-
-        try {
-            URL javaUrl = new URL(url);
-            javaUrl.toURI();
-        } catch (URISyntaxException | MalformedURLException ex) {
-            return ex.getMessage();
-        }
-
-        return null;
-    }
 }

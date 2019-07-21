@@ -3,6 +3,7 @@ package de.lukweb.hasteit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.intellij.openapi.components.ServiceManager;
+import de.lukweb.share.ShareResult;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -20,7 +21,7 @@ public class HasteUploader {
         this.settings = settings;
     }
 
-    public void upload(String content, String extension, Result result) {
+    public void upload(String content, String extension, HasteResult result) {
         try {
             URL obj = new URL(settings.getUploadUrl());
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -51,17 +52,16 @@ public class HasteUploader {
             }
 
             String hasteCode = json.getAsJsonObject().get("key").getAsString();
-            result.onSuccess(settings.getFileUrl(hasteCode, extension));
+            result.onHaste(settings.getFileUrl(hasteCode, extension));
+            result.onSuccess();
         } catch (IOException e) {
-            result.onFailture(e);
+            result.onFailure(e);
         }
     }
 
-    interface Result {
+    interface HasteResult extends ShareResult {
 
-        void onSuccess(String hasteUrl);
-
-        void onFailture(IOException ex);
+        void onHaste(String hasteUrl);
 
     }
 

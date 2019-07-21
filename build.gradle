@@ -9,6 +9,8 @@ version '1.0-SNAPSHOT'
 subprojects {
 
     apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.jetbrains.intellij'
     group = 'de.lukweb.share'
     
     repositories {
@@ -20,21 +22,36 @@ subprojects {
     dependencies {
         testImplementation group: 'junit', name: 'junit', version: '4.12'
     }
+
+    intellij {
+        version '2018.3.3' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
+        updateSinceUntilBuild false // Disables updating until-build attribute in plugin.xml
+    }
     
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+    
+}
+
+project(':ShareBase') {
+
+    apply plugin: 'java-library'
+
+    dependencies {
+        api 'com.squareup.okhttp3:okhttp:4.0.1'
+    }
+
 }
 
 // All of the default configuration for the Intellij plugins
 configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam'}) {
 
-    apply plugin: 'org.jetbrains.intellij'
-
     dependencies {
         implementation project(':ShareBase')
-    }
-
-    intellij {
-        version '2018.3.3' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
-        updateSinceUntilBuild false // Disables updating until-build attribute in plugin.xml
     }
 
     publishPlugin {

@@ -1,7 +1,7 @@
 package de.lukweb.hasteit;
 
 import com.intellij.openapi.options.Configurable;
-import org.jetbrains.annotations.Nls;
+import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -22,7 +22,6 @@ public class HasteSettingsPage implements Configurable {
         this.settings = settings;
     }
 
-    @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
         return "HasteIt";
@@ -119,7 +118,7 @@ public class HasteSettingsPage implements Configurable {
 
     private void checkInputUrlCorrect() {
         String url = textHasteUrl.getText();
-        String checkResult = settings.checkUrl(url);
+        String checkResult = ShareWebTools.checkUrl(url);
         if (url.isEmpty() || checkResult == null || !checkUseCustomHaste.isSelected()) {
             labelUrlError.setVisible(false);
         } else {
