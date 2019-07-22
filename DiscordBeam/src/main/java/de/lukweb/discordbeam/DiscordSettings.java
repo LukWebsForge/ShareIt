@@ -17,8 +17,9 @@ public class DiscordSettings extends ShareSettings<DiscordSettingsState> {
         return ServiceManager.getService(DiscordSettings.class);
     }
 
-    public DiscordSettings() {
-        super(DiscordSettingsState.class);
+    @Override
+    protected DiscordSettingsState newState() {
+        return new DiscordSettingsState();
     }
 
     public boolean isWebhookSet() {

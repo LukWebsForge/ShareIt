@@ -3,19 +3,18 @@ package de.lukweb.share;
 import com.intellij.openapi.components.PersistentStateComponent;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.InvocationTargetException;
-
 public abstract class ShareSettings<T extends ShareSettingsState> implements PersistentStateComponent<T> {
 
-    private Class<T> stateClass;
     private T settingsState;
 
-    public ShareSettings(Class<T> stateClass) {
-        this.stateClass = stateClass;
+    public ShareSettings() {
         this.settingsState = newState();
     }
 
+    protected abstract T newState();
+
     @Override
+    @NotNull
     public T getState() {
         if (settingsState == null) {
             this.settingsState = newState();
@@ -31,14 +30,5 @@ public abstract class ShareSettings<T extends ShareSettingsState> implements Per
     @Override
     public void noStateLoaded() {
         settingsState = newState();
-    }
-
-    private T newState() {
-        try {
-            return stateClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-            return null;
-        }
     }
 }

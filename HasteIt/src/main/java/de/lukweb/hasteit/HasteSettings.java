@@ -17,8 +17,9 @@ public class HasteSettings extends ShareSettings<HasteSettingsState> {
         return ServiceManager.getService(HasteSettings.class);
     }
 
-    public HasteSettings() {
-        super(HasteSettingsState.class);
+    @Override
+    protected HasteSettingsState newState() {
+        return new HasteSettingsState();
     }
 
     public String getCustomUrl() {
