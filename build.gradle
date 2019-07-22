@@ -39,10 +39,8 @@ subprojects {
 
 project(':ShareBase') {
 
-    apply plugin: 'java-library'
-
     dependencies {
-        api 'com.squareup.okhttp3:okhttp:4.0.1'
+        compile 'com.squareup.okhttp3:okhttp:4.0.1'
     }
 
 }
@@ -51,7 +49,7 @@ project(':ShareBase') {
 configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam'}) {
 
     dependencies {
-        implementation project(':ShareBase')
+        compile project(':ShareBase')
     }
 
     publishPlugin {
