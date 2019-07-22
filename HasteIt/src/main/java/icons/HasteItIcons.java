@@ -6,6 +6,6 @@ import javax.swing.*;
 
 public interface HasteItIcons {
 
-    Icon UPLOAD_ACTION = IconLoader.getIcon("hastebin.png");
+    Icon UPLOAD_ACTION = IconLoader.getIcon("hastebin.svg");
 
 }
