@@ -1,11 +1,13 @@
 package de.lukweb.discordbeam;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
 import de.lukweb.discordbeam.ui.JTextFieldLimit;
+import de.lukweb.discordbeam.ui.WebhookValidator;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 
-public class DiscordSettingsPage implements SearchableConfigurable {
+public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
 
     private DiscordSettings settings;
 
@@ -51,6 +53,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         panelLongCode.setBorder(IdeBorderFactory.createTitledBorder("Share long code via..."));
 
         labelCustomName.setLabelFor(editCustomName);
+        WebhookValidator.installOn(this, editWebHookUrl);
 
         editCustomName.getEmptyText().setText(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
         editCustomName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
@@ -135,7 +138,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     public void apply() throws ConfigurationException {
 
         String urlCheck = ShareWebTools.checkUrl(editWebHookUrl.getText());
-        if (urlCheck != null) {
+        if (!editWebHookUrl.getText().isEmpty() && urlCheck != null) {
             editWebHookUrl.requestFocusInWindow();
             throw new ConfigurationException(urlCheck, "Invalid Webhhok Url");
         }
@@ -155,5 +158,10 @@ public class DiscordSettingsPage implements SearchableConfigurable {
             settingsState.setCustomName(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
             reset();
         }
+    }
+
+    @Override
+    public void dispose() {
+        disposeUIResources();
     }
 }
