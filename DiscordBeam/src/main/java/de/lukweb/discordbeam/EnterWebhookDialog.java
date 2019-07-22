@@ -11,16 +11,14 @@ import java.net.URL;
 
 public class EnterWebhookDialog extends DialogWrapper {
 
-    private DiscordSettings settings;
     private URL supportUrl;
 
     private JPanel centerPanel;
     private JTextField urlTextField;
     private JLabel infoLabel;
 
-    public EnterWebhookDialog(DiscordSettings settings) {
+    public EnterWebhookDialog(String oldWebhookUrl) {
         super(true);
-        this.settings = settings;
 
         try {
             supportUrl = new URL("https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks");
@@ -28,9 +26,7 @@ public class EnterWebhookDialog extends DialogWrapper {
             ex.printStackTrace();
         }
 
-        if (settings.getState().getWebhookUrl() != null) {
-            urlTextField.setText(settings.getState().getWebhookUrl());
-        }
+        urlTextField.setText(oldWebhookUrl);
 
         setTitle("Enter a Webhook Url");
         init();
@@ -46,14 +42,6 @@ public class EnterWebhookDialog extends DialogWrapper {
     @Override
     protected void doHelpAction() {
         ShareWebTools.openURL(supportUrl);
-    }
-
-    @Override
-    protected void doOKAction() {
-        if (getOKAction().isEnabled()) {
-            settings.getState().setWebhookUrl(urlTextField.getText());
-            super.doOKAction();
-        }
     }
 
     @Nullable
@@ -76,6 +64,10 @@ public class EnterWebhookDialog extends DialogWrapper {
             return new ValidationInfo(checkError, urlTextField);
         }
         return null;
+    }
+
+    public String getWebhookUrl() {
+        return urlTextField.getText();
     }
 
 }

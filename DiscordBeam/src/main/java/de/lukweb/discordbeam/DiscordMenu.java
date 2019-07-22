@@ -29,7 +29,10 @@ public class DiscordMenu extends ShareMenu {
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
 
         if (!settings.isWebhookSet()) {
-            if (!new EnterWebhookDialog(settings).showAndGet()) {
+            EnterWebhookDialog dialog = new EnterWebhookDialog(settings.getState().getWebhookUrl());
+            if (dialog.showAndGet()) {
+                settings.getState().setWebhookUrl(dialog.getWebhookUrl());
+            } else {
                 return;
             }
         }
