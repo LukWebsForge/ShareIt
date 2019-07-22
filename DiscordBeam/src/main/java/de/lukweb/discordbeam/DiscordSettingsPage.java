@@ -52,8 +52,8 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
         labelCustomName.setLabelFor(editCustomName);
 
-        editCustomName.getEmptyText().setText(settings.getDefaultName());
-        editCustomName.setTextToTriggerEmptyTextStatus(settings.getDefaultName());
+        editCustomName.getEmptyText().setText(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
+        editCustomName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
         editCustomName.setDocument(new JTextFieldLimit(80));
         editCustomName.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
@@ -110,7 +110,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
             return true;
         }
 
-        if (isModified(editCustomName, settings.getCustomOrDefaultName())) {
+        if (isModified(editCustomName, settingsState.getCustomName())) {
             return true;
         }
 
@@ -122,7 +122,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         DiscordSettingsState settingsState = settings.getState();
 
         editWebHookUrl.setText(settingsState.getWebhookUrl());
-        editCustomName.setText(settings.getCustomOrDefaultName());
+        editCustomName.setText(settingsState.getCustomName());
         checkDontAskForService.setSelected(settingsState.isDontAskForService());
         if (settingsState.getShareService() == LargeShareService.GITHUB_GIST && LargeShareService.GITHUB_GIST.isAvailable()) {
             shareVia.setSelected(radioGist.getModel(), true);
@@ -149,14 +149,11 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         settingsState.setShareService(getSelectedShareService());
         settingsState.setDontAskForService(checkDontAskForService.isSelected());
         settingsState.setWebhookUrl(editWebHookUrl.getText());
+        settingsState.setCustomName(editCustomName.getText());
 
-        String customNameText = editCustomName.getText();
-        if (isModified(editCustomName, settings.getDefaultName()) && !customNameText.isEmpty()) {
-            settingsState.setCustomName(customNameText.trim());
-        } else {
-            settingsState.setCustomName(null);
+        if (settingsState.getCustomName().isEmpty()) {
+            settingsState.setCustomName(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
             reset();
         }
-
     }
 }

@@ -1,23 +1,29 @@
 package de.lukweb.discordbeam;
 
 import de.lukweb.share.ShareSettingsState;
+import org.jetbrains.annotations.NotNull;
 
 public class DiscordSettingsState implements ShareSettingsState {
 
-    private String webhookUrl = null;
-    private String customName = null;
+    public static final String DEFAULT_CUSTOM_NAME = "DiscordBeam";
+
+    private String webhookUrl;
+    private String customName;
     private LargeShareService shareService;
     private boolean dontAskForService;
 
     public DiscordSettingsState() {
+        webhookUrl = "";
+        customName = DEFAULT_CUSTOM_NAME;
         shareService = LargeShareService.DISCORD_FILE;
+        dontAskForService = false;
     }
 
     public String getWebhookUrl() {
         return webhookUrl;
     }
 
-    public void setWebhookUrl(String webhookUrl) {
+    public void setWebhookUrl(@NotNull String webhookUrl) {
         this.webhookUrl = webhookUrl;
     }
 
@@ -25,7 +31,7 @@ public class DiscordSettingsState implements ShareSettingsState {
         return customName;
     }
 
-    public void setCustomName(String customName) {
+    public void setCustomName(@NotNull String customName) {
         this.customName = customName;
     }
 
@@ -33,7 +39,7 @@ public class DiscordSettingsState implements ShareSettingsState {
         return shareService;
     }
 
-    public void setShareService(LargeShareService shareService) {
+    public void setShareService(@NotNull LargeShareService shareService) {
         this.shareService = shareService;
     }
 

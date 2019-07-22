@@ -24,23 +24,7 @@ public class DiscordSettings extends ShareSettings<DiscordSettingsState> {
 
     public boolean isWebhookSet() {
         String webhookUrl = getState().getWebhookUrl();
-        if (webhookUrl == null || webhookUrl.isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public String getCustomOrDefaultName() {
-        if (getState().getCustomName() != null) {
-            return getState().getCustomName();
-        } else {
-            return getDefaultName();
-        }
-    }
-
-    public String getDefaultName() {
-        return "DiscordBeam";
+        return webhookUrl != null && !webhookUrl.isEmpty();
     }
 
 }

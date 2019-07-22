@@ -47,13 +47,13 @@ public class DiscordUploader {
     private void post(Function<MultipartBody.Builder, MultipartBody.Builder> postEditor, ShareResult result) {
         MultipartBody.Builder postBodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("username", settings.getCustomOrDefaultName());
+                .addFormDataPart("username", settings.getState().getCustomName());
 
         postBodyBuilder = postEditor.apply(postBodyBuilder);
         MultipartBody postBody = postBodyBuilder.build();
 
         Request request = new Request.Builder()
-                .url(settings.getState().getWebhookUrl()/* + "?wait=true"*/)
+                .url(settings.getState().getWebhookUrl())
                 .post(postBody)
                 .build();
 
