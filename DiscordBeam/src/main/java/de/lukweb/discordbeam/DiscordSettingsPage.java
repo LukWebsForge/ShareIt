@@ -2,6 +2,7 @@ package de.lukweb.discordbeam;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
 import de.lukweb.discordbeam.ui.JTextFieldLimit;
@@ -11,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 public class DiscordSettingsPage implements SearchableConfigurable {
 
@@ -55,19 +55,9 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         editCustomName.getEmptyText().setText(settings.getDefaultName());
         editCustomName.setTextToTriggerEmptyTextStatus(settings.getDefaultName());
         editCustomName.setDocument(new JTextFieldLimit(80));
-        editCustomName.getDocument().addDocumentListener(new DocumentListener() {
+        editCustomName.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                updateCustomNameCounter();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                updateCustomNameCounter();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
+            protected void textChanged(@NotNull DocumentEvent e) {
                 updateCustomNameCounter();
             }
         });

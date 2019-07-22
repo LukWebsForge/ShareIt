@@ -1,12 +1,13 @@
 package de.lukweb.hasteit;
 
 import com.intellij.openapi.options.Configurable;
+import com.intellij.ui.DocumentAdapter;
 import de.lukweb.share.ShareWebTools;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 public class HasteSettingsPage implements Configurable {
 
@@ -33,23 +34,9 @@ public class HasteSettingsPage implements Configurable {
         loadFromSettings();
 
         checkUseCustomHaste.addActionListener(e -> checkEnableInput());
-        textHasteUrl.getDocument().addDocumentListener(new DocumentListener() {
+        textHasteUrl.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                onChange();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                onChange();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                onChange();
-            }
-
-            private void onChange() {
+            protected void textChanged(@NotNull DocumentEvent e) {
                 checkInputUrlCorrect();
             }
         });
