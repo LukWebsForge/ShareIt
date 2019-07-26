@@ -1,7 +1,9 @@
 # HasteIt / DiscordBeam
 
-<img src="./img/hasteit.svg" alt="HasteIt" height="200"/>
-<img src="./img/discordbeam.svg" alt="DiscordBeam" height="200"/>
+<p>
+    <a href="./HasteIt"><img src="./img/hasteit.svg" alt="HasteIt" height="200"/></a>
+    <a href="./DiscordBeam"><img src="./img/discordbeam.svg" alt="DiscordBeam" height="200"/></a>
+</p>
 
 Both are plugins for [IDEA](https://www.jetbrains.com/idea/) -based IDEs.
 
@@ -34,3 +36,14 @@ Here are some interesting links for plugin development:
 * https://github.com/JetBrains/gradle-intellij-plugin
 * https://www.jetbrains.org/intellij/sdk/docs/welcome.html
 * https://jetbrains.design/intellij/principles/icons/
+
+## Git Tags
+
+You may notice, that the tags in this repository look a little bit strange.
+You're right, but there's system behind this naming logic.
+
+The versions of the both plugins aren't synchronous, so every tag beginning with the letter 'H' 
+and a following version number marks a new HasteIt version. In comparision to that every tag 
+which begins with 'D' marks a new DiscordBeam version.
+
+There are some older tags which don't have a letter in front, they are just old HasteIt versions.
