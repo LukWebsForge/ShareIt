@@ -1,4 +1,4 @@
-version '1.09'
+version '1.10'
 
 intellij {
     pluginName 'HasteIt'
