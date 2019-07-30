@@ -8,5 +8,6 @@ intellij {
 patchPluginXml {
     changeNotes """
       The first version.
+      With this plugin, you can easily share your files or codes via click to your Discord server.
       """
 }
