@@ -9,7 +9,7 @@ patchPluginXml {
       <ul>
       <li>Only shows the HasteIt button in the right click menu, if it's possible to share the file</li>
       <li>Removed the 'HasteIt' button from the 'Tools' menu</li>
-      <li>If you want to share files to a Discord server, checkout <a href="https://github.com/LukWebsForge/HasteIt/issues/5">DiscordBeam</a></li>
+      <li>If you want to share files to a Discord server, checkout <a href="https://plugins.jetbrains.com/plugin/12804-discordbeam">DiscordBeam</a></li>
       </ul>
       """
 }
