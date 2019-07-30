@@ -13,6 +13,8 @@ public class DiscordUploader {
     // https://square.github.io/okhttp/recipes/#posting-a-multipart-request
     // https://discordapp.com/developers/docs/resources/webhook#execute-webhook
 
+    private static final String AVATAR_URL = "https://raw.githubusercontent.com/LukWebsForge/HasteIt/shareit/img/discordbeam%4030x.png";
+
     public static DiscordUploader getInstance() {
         return ServiceManager.getService(DiscordUploader.class);
     }
@@ -47,7 +49,8 @@ public class DiscordUploader {
     private void post(Function<MultipartBody.Builder, MultipartBody.Builder> postEditor, ShareResult result) {
         MultipartBody.Builder postBodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("username", settings.getState().getCustomName());
+                .addFormDataPart("username", settings.getState().getCustomName())
+                .addFormDataPart("avatar_url", AVATAR_URL);
 
         postBodyBuilder = postEditor.apply(postBodyBuilder);
         MultipartBody postBody = postBodyBuilder.build();
