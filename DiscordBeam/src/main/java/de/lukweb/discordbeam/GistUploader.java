@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.jetbrains.plugins.github.api.requests.GithubGistRequest.FileContent;
+import static org.jetbrains.plugins.github.api.data.request.GithubGistRequest.FileContent;
 
 // https://github.com/JetBrains/intellij-community/blob/2c9b00ff4b6133e69538c2f4382444e00e99efed/plugins/github/src/org/jetbrains/plugins/github/GithubCreateGistAction.java#L114
 public class GistUploader {
