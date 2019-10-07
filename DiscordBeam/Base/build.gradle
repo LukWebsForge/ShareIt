@@ -1,0 +1,6 @@
+version '1.01'
+
+dependencies {
+    compile project(':ShareBase')
+    compile 'com.squareup.okhttp3:okhttp:4.2.2'
+}

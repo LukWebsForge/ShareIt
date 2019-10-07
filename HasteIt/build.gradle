@@ -4,6 +4,10 @@ intellij {
     pluginName 'HasteIt'
 }
 
+dependencies {
+    compile project(':ShareBase')
+}
+
 patchPluginXml {
     changeNotes """
       <ul>

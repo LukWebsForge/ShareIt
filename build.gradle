@@ -24,8 +24,12 @@ subprojects {
     }
 
     intellij {
-        version '2018.3.3' // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
-        updateSinceUntilBuild false // Disables updating until-build attribute in plugin.xml
+        // https://www.jetbrains.org/intellij/sdk/docs/reference_guide/intellij_artifacts.html
+        // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
+        // Full list of IntelliJ IDEA snapshots: https://www.jetbrains.com/intellij-repository/snapshots/
+        version '2018.3.3'
+        // Disables updating until-build attribute in plugin.xml
+        updateSinceUntilBuild false
     }
     
     idea {
@@ -37,20 +41,8 @@ subprojects {
     
 }
 
-project(':ShareBase') {
-
-    dependencies {
-        compile 'com.squareup.okhttp3:okhttp:4.0.1'
-    }
-
-}
-
 // All of the default configuration for the Intellij plugins
-configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam'}) {
-
-    dependencies {
-        compile project(':ShareBase')
-    }
+configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam:Pre2019-3' || it.name == 'DiscordBeam:Post2019-3'}) {
 
     publishPlugin {
         // Publishing with gradle.properties

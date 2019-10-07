@@ -3,6 +3,7 @@ package de.lukweb.discordbeam;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.plugins.github.api.*;
 import org.jetbrains.plugins.github.api.data.GithubGist;
+import org.jetbrains.plugins.github.api.requests.GithubGistRequest;
 import org.jetbrains.plugins.github.authentication.GithubAuthenticationManager;
 import org.jetbrains.plugins.github.authentication.accounts.GithubAccount;
 
@@ -10,10 +11,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.jetbrains.plugins.github.api.data.request.GithubGistRequest.FileContent;
-
 // https://github.com/JetBrains/intellij-community/blob/2c9b00ff4b6133e69538c2f4382444e00e99efed/plugins/github/src/org/jetbrains/plugins/github/GithubCreateGistAction.java#L114
-public class GistUploader {
+public class GistUploaderImpl implements GistUploader {
 
     public boolean isGithubConfigured() {
         GithubAuthenticationManager authManager = GithubAuthenticationManager.getInstance();
@@ -37,7 +36,8 @@ public class GistUploader {
         }
 
         GithubServerPath server = githubAccount.getServer();
-        List<FileContent> fileContents = Collections.singletonList(new FileContent(fileName, content));
+        List<GithubGistRequest.FileContent> fileContents =
+                Collections.singletonList(new GithubGistRequest.FileContent(fileName, content));
 
         GithubApiRequest<GithubGist> gistCreate = GithubApiRequests.Gists
                 .create(server, fileContents, "", false);

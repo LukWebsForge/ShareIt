@@ -1,0 +1,19 @@
+version '1.01-POST3'
+
+dependencies {
+    compile project(':DiscordBeam:Base')
+}
+
+intellij {
+    version 'LATEST-EAP-SNAPSHOT'
+    updateSinceUntilBuild false
+    pluginName 'DiscordBeam'
+    plugins = ['github']
+}
+
+patchPluginXml {
+    changeNotes """
+      The first version.
+      With this plugin, you can easily share your files or codes via click to your Discord server.
+      """
+}
