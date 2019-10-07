@@ -1,4 +1,4 @@
-version '1.01-POST3'
+version '1.02-POST3'
 
 dependencies {
     compile project(':DiscordBeam:Base')
@@ -13,7 +13,7 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-      The first version.
+      This plugin is now compatible to 2019.3.
       With this plugin, you can easily share your files or codes via click to your Discord server.
       """
 }
