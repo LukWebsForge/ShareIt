@@ -1,4 +1,4 @@
-version '1.02-POST3'
+version '1.03--'
 
 dependencies {
     compile project(':DiscordBeam:Base')
