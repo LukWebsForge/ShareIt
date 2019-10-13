@@ -42,7 +42,7 @@ subprojects {
 }
 
 // All of the default configuration for the Intellij plugins
-configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'DiscordBeam:Pre2019-3' || it.name == 'DiscordBeam:Post2019-3'}) {
+configure(subprojects.findAll { it.name == 'HasteIt' || it.name == 'Pre2019-3' || it.name == 'Post2019-3'}) {
 
     publishPlugin {
         // Publishing with gradle.properties
