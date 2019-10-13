@@ -1,4 +1,4 @@
-package de.lukweb.discordbeam;
+package de.lukweb.discordbeam.uploaders;
 
 import com.intellij.openapi.project.Project;
 

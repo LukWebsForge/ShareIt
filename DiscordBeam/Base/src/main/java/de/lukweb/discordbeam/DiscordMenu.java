@@ -4,6 +4,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import de.lukweb.discordbeam.uploaders.DiscordUploader;
+import de.lukweb.discordbeam.uploaders.GistUploader;
+import de.lukweb.discordbeam.uploaders.HastebinUploader;
+import de.lukweb.discordbeam.uploaders.LargeShareService;
 import de.lukweb.share.ShareMenu;
 import de.lukweb.share.ShareResult;
 
@@ -57,14 +61,14 @@ public class DiscordMenu extends ShareMenu {
 
         startUploadTask(TASK_TITLE, event.getProject(), (indicator) -> {
             if (tooBigForDiscord.get()) {
-                uploadLongText(text, file.getName(), settingsState.getShareService(), event.getProject());
+                uploadLongText(text, file.getName(), file.getExtension(), settingsState.getShareService(), event.getProject());
             } else {
                 uploader.uploadCode(text, file.getExtension(), handleUploadResult());
             }
         });
     }
 
-    private void uploadLongText(String text, String fileName, LargeShareService service, Project project) {
+    private void uploadLongText(String text, String fileName, String fileExtension, LargeShareService service, Project project) {
         if (service == LargeShareService.GITHUB_GIST && service.isAvailable()) {
             GistUploader gistUploader = ServiceManager.getService(GistUploader.class);
 
@@ -82,6 +86,18 @@ public class DiscordMenu extends ShareMenu {
             }
 
             uploader.uploadText(gistUrl, handleUploadResult());
+        } else if (service == LargeShareService.HASTEBIN && service.isAvailable()) {
+            HastebinUploader hasteUploader = ServiceManager.getService(HastebinUploader.class);
+
+            String hasteUrl;
+            try {
+                hasteUrl = hasteUploader.shareHaste(text, fileExtension);
+            } catch (IOException ex) {
+                errorNotification(ex.getClass().getName() + " while uploading to hastebin: " + ex.getMessage());
+                return;
+            }
+
+            uploader.uploadText("View " + fileName + " on hastebin\n" + hasteUrl, handleUploadResult());
         } else {
             byte[] textBytes = text.getBytes(StandardCharsets.UTF_8);
             if (!checkFileSizeLimit(textBytes.length)) {

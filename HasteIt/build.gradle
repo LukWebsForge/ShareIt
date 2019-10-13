@@ -1,4 +1,4 @@
-version '1.11'
+version '1.12'
 
 intellij {
     pluginName 'HasteIt'
@@ -11,9 +11,7 @@ dependencies {
 patchPluginXml {
     changeNotes """
       <ul>
-      <li>Only shows the HasteIt button in the right click menu, if it's possible to share the file</li>
-      <li>Removed the 'HasteIt' button from the 'Tools' menu</li>
-      <li>If you want to share files to a Discord server, checkout <a href="https://plugins.jetbrains.com/plugin/12804-discordbeam">DiscordBeam</a></li>
+      <li>HasteIt now works with <a href="https://plugins.jetbrains.com/plugin/12804-discordbeam">DiscordBeam</a></li>
       </ul>
       """
 }

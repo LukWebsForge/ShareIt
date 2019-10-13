@@ -1,6 +1,7 @@
 package de.lukweb.discordbeam;
 
 import com.intellij.openapi.ui.DialogWrapper;
+import de.lukweb.discordbeam.uploaders.LargeShareService;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class ShareAsFileDialog extends DialogWrapper {
     private JRadioButton radioDisFile;
     private JRadioButton radioGist;
     private JCheckBox buttonAlways;
+    private JRadioButton radioHaste;
 
     public ShareAsFileDialog(LargeShareService service) {
         super(true);
@@ -27,9 +29,12 @@ public class ShareAsFileDialog extends DialogWrapper {
         );
 
         LargeShareService.applyGistNotAvailable(radioGist);
+        LargeShareService.applyHasteStatus(radioHaste);
 
         if (service == LargeShareService.GITHUB_GIST && LargeShareService.GITHUB_GIST.isAvailable()) {
             shareGroup.setSelected(radioGist.getModel(), true);
+        } else if (service == LargeShareService.HASTEBIN && LargeShareService.HASTEBIN.isAvailable()) {
+            shareGroup.setSelected(radioHaste.getModel(), true);
         } else {
             shareGroup.setSelected(radioDisFile.getModel(), true);
         }
@@ -48,6 +53,8 @@ public class ShareAsFileDialog extends DialogWrapper {
             return LargeShareService.DISCORD_FILE;
         } else if (radioGist.isSelected()) {
             return LargeShareService.GITHUB_GIST;
+        } else if (radioHaste.isSelected()) {
+            return LargeShareService.HASTEBIN;
         } else {
             return LargeShareService.DISCORD_FILE;
         }

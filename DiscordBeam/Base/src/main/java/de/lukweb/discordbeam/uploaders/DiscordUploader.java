@@ -1,6 +1,7 @@
-package de.lukweb.discordbeam;
+package de.lukweb.discordbeam.uploaders;
 
 import com.intellij.openapi.components.ServiceManager;
+import de.lukweb.discordbeam.DiscordSettings;
 import de.lukweb.share.ShareResult;
 import okhttp3.*;
 

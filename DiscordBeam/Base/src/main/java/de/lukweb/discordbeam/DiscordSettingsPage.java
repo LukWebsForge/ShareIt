@@ -8,6 +8,7 @@ import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
 import de.lukweb.discordbeam.ui.JTextFieldLimit;
 import de.lukweb.discordbeam.ui.WebhookValidator;
+import de.lukweb.discordbeam.uploaders.LargeShareService;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,7 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
     private JRadioButton radioGist;
     private JCheckBox checkDontAskForService;
     private JLabel labelCustomName;
+    private JRadioButton radioHaste;
     private ButtonGroup shareVia;
 
     public DiscordSettingsPage(DiscordSettings settings) {
@@ -66,6 +68,7 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
         });
 
         LargeShareService.applyGistNotAvailable(radioGist);
+        LargeShareService.applyHasteStatus(radioHaste);
 
         reset();
         updateCustomNameCounter();
@@ -92,6 +95,8 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
     private LargeShareService getSelectedShareService() {
         if (radioGist.isSelected() && LargeShareService.GITHUB_GIST.isAvailable()) {
             return LargeShareService.GITHUB_GIST;
+        } else if (radioHaste.isSelected() && LargeShareService.HASTEBIN.isAvailable()) {
+            return LargeShareService.HASTEBIN;
         } else {
             return LargeShareService.DISCORD_FILE;
         }
@@ -129,6 +134,8 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
         checkDontAskForService.setSelected(settingsState.isDontAskForService());
         if (settingsState.getShareService() == LargeShareService.GITHUB_GIST && LargeShareService.GITHUB_GIST.isAvailable()) {
             shareVia.setSelected(radioGist.getModel(), true);
+        } else if (settingsState.getShareService() == LargeShareService.HASTEBIN && LargeShareService.HASTEBIN.isAvailable()) {
+            shareVia.setSelected(radioHaste.getModel(), true);
         } else {
             shareVia.setSelected(radioDiscordFile.getModel(), true);
         }

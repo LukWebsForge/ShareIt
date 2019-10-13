@@ -1,5 +1,6 @@
 package de.lukweb.discordbeam;
 
+import de.lukweb.discordbeam.uploaders.LargeShareService;
 import de.lukweb.share.ShareSettingsState;
 import org.jetbrains.annotations.NotNull;
 

@@ -59,7 +59,7 @@ public class HasteUploader {
         }
     }
 
-    interface HasteResult extends ShareResult {
+    public interface HasteResult extends ShareResult {
 
         void onHaste(String hasteUrl);
 

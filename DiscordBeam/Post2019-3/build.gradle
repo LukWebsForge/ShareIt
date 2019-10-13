@@ -8,12 +8,12 @@ intellij {
     version 'LATEST-EAP-SNAPSHOT'
     updateSinceUntilBuild false
     pluginName 'DiscordBeam'
-    plugins = ['github']
+    plugins = ['github', project(':HasteIt')]
 }
 
 patchPluginXml {
     changeNotes """
-      This plugin is now compatible to 2019.3.
-      With this plugin, you can easily share your files or codes via click to your Discord server.
+      This plugin is now compatible to 2019.3 and you can share long 
+      code via hastebin, if you install the plugin HasteIt.
       """
 }

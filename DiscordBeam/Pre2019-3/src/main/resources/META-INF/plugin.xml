@@ -14,13 +14,14 @@
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends optional="true" config-file="plugin-github.xml">org.jetbrains.plugins.github</depends>
+    <depends optional="true" config-file="plugin-hastebin.xml">de.lukweb.hasteit</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <projectConfigurable id="discordbeam" displayName="Discord Beam" groupId="tools"
                              instance="de.lukweb.discordbeam.DiscordSettingsPage"/>
         <applicationService serviceImplementation="de.lukweb.discordbeam.DiscordSettings"/>
-        <applicationService serviceImplementation="de.lukweb.discordbeam.DiscordUploader"/>
+        <applicationService serviceImplementation="de.lukweb.discordbeam.uploaders.DiscordUploader"/>
     </extensions>
 
     <actions>
