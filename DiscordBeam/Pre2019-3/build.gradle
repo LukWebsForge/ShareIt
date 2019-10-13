@@ -13,7 +13,7 @@ patchPluginXml {
     changeNotes """
       The plugin is now compatible to 2019.3.
       Due to a API change there are now two versions of the plugin. 
-      This versions works with IDE prior to 2019.3.
-      And you can share long code via hastebin, if you install HasteIt.
+      This versions works with IDE prior to 2019.3 and you recognize it by the '--' after the version.
+      Extra: You can share long code via hastebin, if you install HasteIt.
       """
 }
