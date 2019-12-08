@@ -21,6 +21,10 @@ public enum FileExtensionMarkdownLanguage {
 		return null;
 	}
 
+	public String getExtension() {
+		return extension;
+	}
+
 	public String getLanguage() {
 		return language;
 	}
