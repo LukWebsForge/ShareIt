@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+// We can ignore this warning, because this component is registered in the Post and Pre projects.
+@SuppressWarnings("ComponentNotRegistered")
 public class DiscordMenu extends ShareMenu {
 
     public static final int MAX_TEXT_LENGTH = 1950;

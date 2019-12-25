@@ -8,6 +8,7 @@ import de.lukweb.share.ShareResult;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class HasteUploader {
 
@@ -15,13 +16,9 @@ public class HasteUploader {
         return ServiceManager.getService(HasteUploader.class);
     }
 
-    private HasteSettings settings;
-
-    public HasteUploader(HasteSettings settings) {
-        this.settings = settings;
-    }
-
     public void upload(String content, String extension, HasteResult result) {
+        HasteSettings settings = HasteSettings.getInstance();
+
         try {
             URL obj = new URL(settings.getUploadUrl());
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -33,7 +30,7 @@ public class HasteUploader {
 
             // Send the post request
             con.setDoOutput(true);
-            BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8));
             wr.write(content);
             wr.flush();
             wr.close();

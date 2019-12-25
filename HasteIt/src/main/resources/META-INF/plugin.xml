@@ -23,7 +23,7 @@
     </extensions>
 
     <actions>
-        <action id="HasteIt.Share" class="de.lukweb.hasteit.HasteMenu" text="Haste it!"
+        <action id="HasteIt.Share" class="de.lukweb.hasteit.HasteMenu" text="Haste It!"
                 description="Share your (selected) text to hastebin!" icon="HasteItIcons.UPLOAD_ACTION">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>

@@ -2,8 +2,8 @@ package de.lukweb.discordbeam.uploaders;
 
 import com.intellij.openapi.components.ServiceManager;
 import de.lukweb.discordbeam.DiscordSettings;
-import de.lukweb.share.ShareResult;
 import de.lukweb.discordbeam.FileExtensionMarkdownLanguage;
+import de.lukweb.share.ShareResult;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -22,11 +22,6 @@ public class DiscordUploader {
     }
 
     private final OkHttpClient client = new OkHttpClient();
-    private DiscordSettings settings;
-
-    public DiscordUploader(DiscordSettings settings) {
-        this.settings = settings;
-    }
 
     public void uploadText(String text, ShareResult result) {
         post((builder -> builder.addFormDataPart("content", text)), result);
@@ -53,6 +48,8 @@ public class DiscordUploader {
     }
 
     private void post(Function<MultipartBody.Builder, MultipartBody.Builder> postEditor, ShareResult result) {
+        DiscordSettings settings = DiscordSettings.getInstance();
+
         MultipartBody.Builder postBodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", settings.getState().getCustomName())

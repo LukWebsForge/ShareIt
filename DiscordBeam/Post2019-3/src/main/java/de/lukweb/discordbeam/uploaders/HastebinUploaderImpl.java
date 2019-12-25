@@ -8,14 +8,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class HastebinUploaderImpl implements HastebinUploader {
 
-    private HasteUploader uploader;
-
-    public HastebinUploaderImpl(HasteUploader uploader) {
-        this.uploader = uploader;
-    }
-
     @Override
     public String shareHaste(String content, String extension) throws IOException {
+        HasteUploader uploader = HasteUploader.getInstance();
+
         if (uploader == null) {
             throw new IOException("there's no hastebin uploader");
         }
