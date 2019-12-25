@@ -1,4 +1,4 @@
-version '1.03'
+version '1.04'
 
 dependencies {
     compile project(':DiscordBeam:Base')
@@ -13,7 +13,9 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-      This plugin is now compatible to 2019.3 and you can share long 
+      1.04: Improves the sharing of Kotlin files to Discord (thanks Nielssg)
+      -------------
+      1.03: This plugin is now compatible to 2019.3 and you can share long 
       code via hastebin, if you install the plugin HasteIt.
       """
 }
