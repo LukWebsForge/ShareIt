@@ -14,6 +14,20 @@ Those two plugins help you to share files or code with a platform.
 
 That's the reason why both plugins share some code which is located in the [ShareBase](./ShareBase) folder.
 
+## DiscordBeam and 2019.3 versions
+
+_You recently upgraded your IDE to the 2019.3 version and are using DiscordBeam?_
+
+To continue using DiscordBeam please uninstall the plugin and reinstall it. Everything should work fine now.
+
+_Why?_
+
+The API of the IDEA Github plugin has changed between the versions (2019.2 and 2019.3). I still wanted to bring new
+features to users of older IDEs versions, so there are now to separate versions of the plugin.  
+It may be helpful for understanding my approach to take a look at the 
+[plugin page](https://plugins.jetbrains.com/plugin/12804-discordbeam/versions).
+Compare the `1.03` and `1.03--` versions.
+
 ## Need help?
 
 Just create an issue and ask your question. I'll try to answer as fast as possible.
