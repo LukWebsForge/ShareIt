@@ -3,6 +3,7 @@ package de.lukweb.discordbeam.uploaders;
 import com.intellij.openapi.components.ServiceManager;
 import de.lukweb.discordbeam.DiscordSettings;
 import de.lukweb.share.ShareResult;
+import de.lukweb.discordbeam.FileExtensionMarkdownLanguage;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -32,7 +33,11 @@ public class DiscordUploader {
     }
 
     public void uploadCode(String text, String extension, ShareResult result) {
-        uploadText("```" + extension + "\n" + text + "\n```", result);
+        String markdownLanguage = extension;
+        FileExtensionMarkdownLanguage language = FileExtensionMarkdownLanguage.getByExtension(extension);
+        if (language != null) markdownLanguage =  language.getLanguage();
+
+        uploadText("```" + markdownLanguage + "\n" + text + "\n```", result);
     }
 
     public void uploadFile(byte[] content, String fileName, ShareResult result) {
