@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <vendor email="info@lukweb.de" url="https://github.com/LukWebsForge/HasteIt">LukWeb</vendor>
+    <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/HasteIt">LukWeb</vendor>
 
     <description><![CDATA[
       With HasteIt you can quickly share your current file or selected text to
