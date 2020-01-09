@@ -15,7 +15,7 @@ public class DiscordUploader {
     // https://square.github.io/okhttp/recipes/#posting-a-multipart-request
     // https://discordapp.com/developers/docs/resources/webhook#execute-webhook
 
-    private static final String AVATAR_URL = "https://raw.githubusercontent.com/LukWebsForge/HasteIt/master/img/discordbeam%4030x.png";
+    private static final String AVATAR_URL = "https://raw.githubusercontent.com/LukWebsForge/ShareIt/master/img/discordbeam%4030x.png";
 
     public static DiscordUploader getInstance() {
         return ServiceManager.getService(DiscordUploader.class);
