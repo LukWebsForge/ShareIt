@@ -7,6 +7,8 @@ dependencies {
 
 intellij {
     version 'LATEST-EAP-SNAPSHOT'
+    // Uncomment the line below to test with IntelliJ 2019.3.4
+    // version '2019.3.4'
     updateSinceUntilBuild false
     pluginName 'DiscordBeam'
     plugins = ['github', project(':HasteIt')]
@@ -15,5 +17,5 @@ intellij {
 patchPluginXml {
     changeNotes """
      1.05: Update for 2020.1 
-      """
+     """
 }
