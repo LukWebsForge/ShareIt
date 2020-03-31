@@ -3,6 +3,7 @@ package de.lukweb.discordbeam.ui;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.ui.ComponentValidator;
 import com.intellij.openapi.ui.ValidationInfo;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.DocumentAdapter;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.NotNull;
@@ -38,18 +39,25 @@ public class WebhookValidator {
         return null;
     }
 
-    public static void installOn(Disposable parent, JTextComponent textComponent) {
+    public static void installOn(Disposable disposable, JTextComponent textComponent) {
         WebhookValidator validator = new WebhookValidator(textComponent);
 
-        new ComponentValidator(parent)
+        new ComponentValidator(disposable)
                 .withValidator(v -> v.updateInfo(validator.validate()))
                 .andStartOnFocusLost()
                 .installOn(textComponent);
 
-        textComponent.getDocument().addDocumentListener(new DocumentAdapter() {
+        DocumentAdapter listener = new DocumentAdapter() {
             @Override
             protected void textChanged(@NotNull DocumentEvent e) {
                 ComponentValidator.getInstance(textComponent).ifPresent(ComponentValidator::revalidate);
+            }
+        };
+
+        textComponent.getDocument().addDocumentListener(listener);
+        Disposer.register(disposable, () -> {
+            if (textComponent.getDocument() != null) {
+                textComponent.getDocument().removeDocumentListener(listener);
             }
         });
     }

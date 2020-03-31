@@ -3,6 +3,7 @@ package de.lukweb.discordbeam;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
@@ -16,9 +17,10 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 
-public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
+public class DiscordSettingsPage implements SearchableConfigurable {
 
     private DiscordSettings settings;
+    private Disposable disposable;
 
     private JPanel panelSettings;
     private JPanel panelDiscord;
@@ -35,6 +37,7 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
 
     public DiscordSettingsPage(DiscordSettings settings) {
         this.settings = settings;
+        this.disposable = Disposer.newDisposable();
     }
 
     @NotNull
@@ -55,7 +58,7 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
         panelLongCode.setBorder(IdeBorderFactory.createTitledBorder("Share long code via..."));
 
         labelCustomName.setLabelFor(editCustomName);
-        WebhookValidator.installOn(this, editWebHookUrl);
+        WebhookValidator.installOn(this.disposable, editWebHookUrl);
 
         editCustomName.getEmptyText().setText(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
         editCustomName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
@@ -168,7 +171,7 @@ public class DiscordSettingsPage implements SearchableConfigurable, Disposable {
     }
 
     @Override
-    public void dispose() {
-        disposeUIResources();
+    public void disposeUIResources() {
+        Disposer.dispose(disposable);
     }
 }
