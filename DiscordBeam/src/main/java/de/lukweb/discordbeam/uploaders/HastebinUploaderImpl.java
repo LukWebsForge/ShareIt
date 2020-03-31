@@ -12,6 +12,8 @@ public class HastebinUploaderImpl implements HastebinUploader {
     public String shareHaste(String content, String extension) throws IOException {
         HasteUploader uploader = HasteUploader.getInstance();
 
+        System.out.println("Haste uploader");
+
         if (uploader == null) {
             throw new IOException("there's no hastebin uploader");
         }

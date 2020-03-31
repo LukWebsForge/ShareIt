@@ -1,7 +1,5 @@
 rootProject.name = 'ShareIt'
 include 'HasteIt'
-include 'DiscordBeam:Base'
-include 'DiscordBeam:Post2019-3'
-include 'DiscordBeam:Pre2019-3'
+include 'DiscordBeam'
 include 'ShareBase'
 

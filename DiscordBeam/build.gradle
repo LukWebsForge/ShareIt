@@ -1,0 +1,19 @@
+version '1.05'
+
+dependencies {
+    compile project(':ShareBase')
+    compile 'com.squareup.okhttp3:okhttp:4.2.2'
+}
+
+intellij {
+    version 'LATEST-EAP-SNAPSHOT'
+    updateSinceUntilBuild false
+    pluginName 'DiscordBeam'
+    plugins = ['github', project(':HasteIt')]
+}
+
+patchPluginXml {
+    changeNotes """
+     1.05: Update for 2020.1 
+      """
+}
