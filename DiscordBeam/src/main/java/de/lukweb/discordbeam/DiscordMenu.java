@@ -100,7 +100,7 @@ public class DiscordMenu extends ShareMenu {
                 return;
             }
 
-            uploader.uploadText("View " + fileName + " on hastebin\n" + hasteUrl, handleUploadResult());
+            uploader.uploadText("View `" + fileName + "` on hastebin\n" + hasteUrl, handleUploadResult());
         } else {
             byte[] textBytes = text.getBytes(StandardCharsets.UTF_8);
             if (!checkFileSizeLimit(textBytes.length)) {
