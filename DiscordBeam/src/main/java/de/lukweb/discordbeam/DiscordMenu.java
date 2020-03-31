@@ -1,6 +1,7 @@
 package de.lukweb.discordbeam;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -59,11 +60,13 @@ public class DiscordMenu extends ShareMenu {
             }
         }
 
+        String fileName = file.getName();
+        String fileExtension = file.getExtension();
         startUploadTask(TASK_TITLE, event.getProject(), (indicator, backgroundable) -> {
             if (tooBigForDiscord.get()) {
-                uploadLongText(text, file.getName(), file.getExtension(), settingsState.getShareService(), backgroundable.getProject());
+                uploadLongText(text, fileName, fileExtension, settingsState.getShareService(), backgroundable.getProject());
             } else {
-                uploader.uploadCode(text, file.getExtension(), handleUploadResult());
+                uploader.uploadCode(text, fileExtension, handleUploadResult());
             }
         });
     }
@@ -110,13 +113,16 @@ public class DiscordMenu extends ShareMenu {
 
     @Override
     protected void uploadFile(final VirtualFile file, final AnActionEvent event) {
+        String fileName = file.getName();
+        long fileLength = file.getLength();
         startUploadTask("Beaming to Discord", event.getProject(), (indicator, backgroundable) -> {
-            if (!checkFileSizeLimit(file.getLength())) {
+            if (!checkFileSizeLimit(fileLength)) {
                 return;
             }
 
             try {
-                uploader.uploadFile(file.contentsToByteArray(), file.getName(), handleUploadResult());
+                byte[] fileContent = ReadAction.compute(file::contentsToByteArray);
+                uploader.uploadFile(fileContent, fileName, handleUploadResult());
             } catch (IOException ex) {
                 handleUploadResult().onFailure(ex);
             }

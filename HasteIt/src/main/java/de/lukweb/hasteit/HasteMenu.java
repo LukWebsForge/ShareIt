@@ -24,8 +24,9 @@ public class HasteMenu extends ShareMenu {
 
     @Override
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
+        String fileExtension = file.getExtension();
         startUploadTask("Uploading to Hastebin", event.getProject(), (indicator, backgroundable) -> {
-            uploader.upload(text, file.getExtension(), new HasteUploader.HasteResult() {
+            uploader.upload(text, fileExtension, new HasteUploader.HasteResult() {
                 @Override
                 public void onHaste(String hasteUrl) {
                     copyToClipboard(hasteUrl);
