@@ -16,7 +16,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public abstract class ShareMenu extends AnAction {
 
@@ -100,12 +100,12 @@ public abstract class ShareMenu extends AnAction {
 
     protected abstract void uploadFile(VirtualFile file, AnActionEvent event);
 
-    protected void startUploadTask(String taskTitle, Project project, Consumer<ProgressIndicator> task) {
+    protected void startUploadTask(String taskTitle, Project project, BiConsumer<ProgressIndicator, Task.Backgroundable> task) {
         new Task.Backgroundable(project, taskTitle) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(true);
-                task.accept(indicator);
+                task.accept(indicator, this);
             }
         }.queue();
     }

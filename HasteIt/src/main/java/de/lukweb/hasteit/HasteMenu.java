@@ -24,7 +24,7 @@ public class HasteMenu extends ShareMenu {
 
     @Override
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
-        startUploadTask("Uploading to Hastebin", event.getProject(), (indicator) -> {
+        startUploadTask("Uploading to Hastebin", event.getProject(), (indicator, backgroundable) -> {
             uploader.upload(text, file.getExtension(), new HasteUploader.HasteResult() {
                 @Override
                 public void onHaste(String hasteUrl) {

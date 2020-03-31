@@ -61,9 +61,9 @@ public class DiscordMenu extends ShareMenu {
             }
         }
 
-        startUploadTask(TASK_TITLE, event.getProject(), (indicator) -> {
+        startUploadTask(TASK_TITLE, event.getProject(), (indicator, backgroundable) -> {
             if (tooBigForDiscord.get()) {
-                uploadLongText(text, file.getName(), file.getExtension(), settingsState.getShareService(), event.getProject());
+                uploadLongText(text, file.getName(), file.getExtension(), settingsState.getShareService(), backgroundable.getProject());
             } else {
                 uploader.uploadCode(text, file.getExtension(), handleUploadResult());
             }
@@ -111,8 +111,8 @@ public class DiscordMenu extends ShareMenu {
     }
 
     @Override
-    protected void uploadFile(VirtualFile file, AnActionEvent event) {
-        startUploadTask("Beaming to Discord", event.getProject(), (indicator) -> {
+    protected void uploadFile(final VirtualFile file, final AnActionEvent event) {
+        startUploadTask("Beaming to Discord", event.getProject(), (indicator, backgroundable) -> {
             if (!checkFileSizeLimit(file.getLength())) {
                 return;
             }
