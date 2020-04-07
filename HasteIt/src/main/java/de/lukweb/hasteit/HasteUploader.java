@@ -43,7 +43,7 @@ public class HasteUploader {
             in.close();
 
             // Get the id of the haste
-            JsonElement json = new JsonParser().parse(response.toString());
+            JsonElement json = JsonParser.parseString(response.toString());
             if (!json.isJsonObject()) {
                 throw new IOException("Can't parse JSON");
             }

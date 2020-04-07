@@ -1,6 +1,8 @@
-version '1.12'
+version '1.13'
 
 intellij {
+    // Comment the line below to test with the latest snapshot
+    // version 'LATEST-EAP-SNAPSHOT'
     pluginName 'HasteIt'
 }
 
@@ -10,8 +12,6 @@ dependencies {
 
 patchPluginXml {
     changeNotes """
-      <ul>
-      <li>HasteIt now works with <a href="https://plugins.jetbrains.com/plugin/12804-discordbeam">DiscordBeam</a></li>
-      </ul>
+      1.13: Prepares for IDEA version 2020.1 
       """
 }

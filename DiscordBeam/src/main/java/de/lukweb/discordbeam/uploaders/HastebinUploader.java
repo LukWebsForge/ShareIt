@@ -17,7 +17,6 @@ public interface HastebinUploader {
                 return HastebinServiceStatus.OUTDATED;
             }
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
             return HastebinServiceStatus.NOT_INSTALLED;
         }
     }

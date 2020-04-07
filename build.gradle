@@ -27,7 +27,7 @@ subprojects {
         // https://www.jetbrains.org/intellij/sdk/docs/reference_guide/intellij_artifacts.html
         // Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases
         // Full list of IntelliJ IDEA snapshots: https://www.jetbrains.com/intellij-repository/snapshots/
-        version '2019.3'
+        version '201-EAP-SNAPSHOT'
         // Disables updating until-build attribute in plugin.xml
         updateSinceUntilBuild false
     }

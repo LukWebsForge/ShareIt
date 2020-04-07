@@ -43,7 +43,7 @@ public class WebhookValidator {
         WebhookValidator validator = new WebhookValidator(textComponent);
 
         new ComponentValidator(disposable)
-                .withValidator(v -> v.updateInfo(validator.validate()))
+                .withValidator(validator::validate)
                 .andStartOnFocusLost()
                 .installOn(textComponent);
 
