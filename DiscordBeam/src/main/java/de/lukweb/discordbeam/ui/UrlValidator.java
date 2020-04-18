@@ -11,12 +11,14 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.JTextComponent;
 
-public class WebhookValidator {
+public class UrlValidator {
 
-    private JTextComponent textComponent;
+    private final JTextComponent textComponent;
+    private final boolean validateWebHook;
 
-    public WebhookValidator(JTextComponent textComponent) {
+    public UrlValidator(JTextComponent textComponent, boolean validateWebHook) {
         this.textComponent = textComponent;
+        this.validateWebHook = validateWebHook;
     }
 
     public ValidationInfo validate() {
@@ -31,7 +33,7 @@ public class WebhookValidator {
             return new ValidationInfo(urlCheck, textComponent);
         }
 
-        if (!url.startsWith("https://discordapp.com/api/webhooks/")) {
+        if (validateWebHook && !url.startsWith("https://discordapp.com/api/webhooks/")) {
             String message = "A Discord webhook should start with 'https://discordapp.com/api/webhooks/'";
             return new ValidationInfo(message, textComponent).asWarning();
         }
@@ -39,8 +41,8 @@ public class WebhookValidator {
         return null;
     }
 
-    public static void installOn(Disposable disposable, JTextComponent textComponent) {
-        WebhookValidator validator = new WebhookValidator(textComponent);
+    public static void installOn(Disposable disposable, boolean webHook, JTextComponent textComponent) {
+        UrlValidator validator = new UrlValidator(textComponent, webHook);
 
         new ComponentValidator(disposable)
                 .withValidator(validator::validate)

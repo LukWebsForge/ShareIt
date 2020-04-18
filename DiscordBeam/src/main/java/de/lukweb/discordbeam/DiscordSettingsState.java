@@ -6,16 +6,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class DiscordSettingsState implements ShareSettingsState {
 
-    public static final String DEFAULT_CUSTOM_NAME = "DiscordBeam";
+    public static final String DEFAULT_USER_NAME = "Mystic Creature";
+    public static final String DEFAULT_USER_ICON = "https://cdn.discordapp.com/embed/avatars/0.png";
 
     private String webhookUrl;
-    private String customName;
+    private String userName;
+    private String userIcon;
     private LargeShareService shareService;
     private boolean dontAskForService;
 
     public DiscordSettingsState() {
         webhookUrl = "";
-        customName = DEFAULT_CUSTOM_NAME;
+        userName = DEFAULT_USER_NAME;
+        userIcon = DEFAULT_USER_ICON;
         shareService = LargeShareService.DISCORD_FILE;
         dontAskForService = false;
     }
@@ -28,12 +31,20 @@ public class DiscordSettingsState implements ShareSettingsState {
         this.webhookUrl = webhookUrl;
     }
 
-    public String getCustomName() {
-        return customName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setCustomName(@NotNull String customName) {
-        this.customName = customName;
+    public void setUserName(@NotNull String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(@NotNull String userIcon) {
+        this.userIcon = userIcon;
     }
 
     public LargeShareService getShareService() {

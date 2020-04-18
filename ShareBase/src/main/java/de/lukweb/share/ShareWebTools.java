@@ -1,6 +1,6 @@
 package de.lukweb.share;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -19,11 +19,11 @@ public class ShareWebTools {
     public static String checkUrl(String url) {
         url = url.trim().toLowerCase();
         if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-            return "Your url must start with http:// or https://";
+            return "The URL has to start with http:// or https://";
         }
 
         if (url.contains(" ")) {
-            return "Your url may not contain spaces";
+            return "The URL may not contain spaces";
         }
 
         try {

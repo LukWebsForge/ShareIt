@@ -1,4 +1,4 @@
-version '1.05'
+version '1.06'
 
 dependencies {
     compile project(':ShareBase')
@@ -15,6 +15,6 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-     1.05: Prepares for IDEA version 2020.1 
+     1.06: Using embeds to share your code 
      """
 }

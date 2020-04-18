@@ -8,7 +8,7 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
 import de.lukweb.discordbeam.ui.JTextFieldLimit;
-import de.lukweb.discordbeam.ui.WebhookValidator;
+import de.lukweb.discordbeam.ui.UrlValidator;
 import de.lukweb.discordbeam.uploaders.LargeShareService;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.NotNull;
@@ -26,12 +26,14 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     private JPanel panelDiscord;
     private JPanel panelLongCode;
     private JTextField editWebHookUrl;
-    private JBTextField editCustomName;
-    private JLabel labelCustomNameCount;
+    private JBTextField editUserName;
+    private JLabel labelUserNameCount;
+    private JBTextField editUserIcon;
     private JRadioButton radioDiscordFile;
     private JRadioButton radioGist;
     private JCheckBox checkDontAskForService;
-    private JLabel labelCustomName;
+    private JLabel labelUserName;
+    private JLabel labelUserIcon;
     private JRadioButton radioHaste;
     private ButtonGroup shareVia;
 
@@ -55,20 +57,26 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     @Override
     public JComponent createComponent() {
         panelDiscord.setBorder(IdeBorderFactory.createTitledBorder("Discord Settings"));
-        panelLongCode.setBorder(IdeBorderFactory.createTitledBorder("Share long code via..."));
+        panelLongCode.setBorder(IdeBorderFactory.createTitledBorder("Share Long Code via..."));
 
-        labelCustomName.setLabelFor(editCustomName);
-        WebhookValidator.installOn(this.disposable, editWebHookUrl);
+        labelUserName.setLabelFor(editUserName);
+        UrlValidator.installOn(this.disposable, true, editWebHookUrl);
 
-        editCustomName.getEmptyText().setText(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
-        editCustomName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
-        editCustomName.setDocument(new JTextFieldLimit(80));
-        editCustomName.getDocument().addDocumentListener(new DocumentAdapter() {
+        editUserName.getEmptyText().setText(DiscordSettingsState.DEFAULT_USER_NAME);
+        editUserName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_USER_NAME);
+        editUserName.setDocument(new JTextFieldLimit(80));
+        editUserName.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
             protected void textChanged(@NotNull DocumentEvent e) {
                 updateCustomNameCounter();
             }
         });
+
+        labelUserIcon.setLabelFor(editUserIcon);
+        UrlValidator.installOn(this.disposable, false, editUserIcon);
+
+        editUserIcon.getEmptyText().setText(DiscordSettingsState.DEFAULT_USER_ICON);
+        editUserIcon.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_USER_ICON);
 
         LargeShareService.applyGistNotAvailable(radioGist);
         LargeShareService.applyHasteStatus(radioHaste);
@@ -85,14 +93,14 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     }
 
     private void updateCustomNameCounter() {
-        int length = editCustomName.getText().length();
+        int length = editUserName.getText().length();
         String lengthString = Integer.toString(length);
 
         if (lengthString.length() < 2) {
             lengthString = "0" + lengthString;
         }
 
-        labelCustomNameCount.setText(lengthString + " / 80");
+        labelUserNameCount.setText(lengthString + " / 80");
     }
 
     private LargeShareService getSelectedShareService() {
@@ -121,7 +129,11 @@ public class DiscordSettingsPage implements SearchableConfigurable {
             return true;
         }
 
-        if (isModified(editCustomName, settingsState.getCustomName())) {
+        if (isModified(editUserName, settingsState.getUserName())) {
+            return true;
+        }
+
+        if (isModified(editUserIcon, settingsState.getUserIcon())) {
             return true;
         }
 
@@ -133,7 +145,8 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         DiscordSettingsState settingsState = settings.getState();
 
         editWebHookUrl.setText(settingsState.getWebhookUrl());
-        editCustomName.setText(settingsState.getCustomName());
+        editUserName.setText(settingsState.getUserName());
+        editUserIcon.setText(settingsState.getUserIcon());
         checkDontAskForService.setSelected(settingsState.isDontAskForService());
         if (settingsState.getShareService() == LargeShareService.GITHUB_GIST && LargeShareService.GITHUB_GIST.isAvailable()) {
             shareVia.setSelected(radioGist.getModel(), true);
@@ -146,14 +159,19 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
     @Override
     public void apply() throws ConfigurationException {
+        String webHookCheck = ShareWebTools.checkUrl(editWebHookUrl.getText());
+        String userIconCheck = ShareWebTools.checkUrl(editUserIcon.getText());
 
-        String urlCheck = ShareWebTools.checkUrl(editWebHookUrl.getText());
-        if (!editWebHookUrl.getText().isEmpty() && urlCheck != null) {
+        if (!editWebHookUrl.getText().isEmpty() && webHookCheck != null) {
             editWebHookUrl.requestFocusInWindow();
-            throw new ConfigurationException(urlCheck, "Invalid Webhhok Url");
+            throw new ConfigurationException(webHookCheck, "Invalid WebHook URL");
         }
-        if (editCustomName.getText().trim().length() > 80) {
-            editCustomName.requestFocusInWindow();
+        if (!editUserIcon.getText().isEmpty() && userIconCheck != null) {
+            editUserIcon.requestFocusInWindow();
+            throw new ConfigurationException(webHookCheck, "Invalid User Icon URL");
+        }
+        if (editUserName.getText().trim().length() > 80) {
+            editUserName.requestFocusInWindow();
             throw new ConfigurationException("Your custom name is too long. A maximum of 80 characters is allowed.", "Custom Name");
         }
 
@@ -162,10 +180,15 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         settingsState.setShareService(getSelectedShareService());
         settingsState.setDontAskForService(checkDontAskForService.isSelected());
         settingsState.setWebhookUrl(editWebHookUrl.getText());
-        settingsState.setCustomName(editCustomName.getText());
+        settingsState.setUserName(editUserName.getText());
+        settingsState.setUserIcon(editUserIcon.getText());
 
-        if (settingsState.getCustomName().isEmpty()) {
-            settingsState.setCustomName(DiscordSettingsState.DEFAULT_CUSTOM_NAME);
+        if (settingsState.getUserName().isEmpty()) {
+            settingsState.setUserName(DiscordSettingsState.DEFAULT_USER_NAME);
+            reset();
+        }
+        if (settingsState.getUserIcon().isEmpty()) {
+            settingsState.setUserIcon(DiscordSettingsState.DEFAULT_USER_ICON);
             reset();
         }
     }

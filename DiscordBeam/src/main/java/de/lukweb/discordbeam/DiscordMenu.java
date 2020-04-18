@@ -21,8 +21,8 @@ public class DiscordMenu extends ShareMenu {
     public static final int MAX_TEXT_LENGTH = 1950;
     public static final String TASK_TITLE = "Beaming to Discord";
 
-    private DiscordUploader uploader;
-    private DiscordSettings settings;
+    private final DiscordUploader uploader;
+    private final DiscordSettings settings;
 
     public DiscordMenu() {
         super("DiscordBeam", true);
@@ -62,16 +62,17 @@ public class DiscordMenu extends ShareMenu {
 
         String fileName = file.getName();
         String fileExtension = file.getExtension();
+        long timestamp = file.getTimeStamp() / 1000;
         startUploadTask(TASK_TITLE, event.getProject(), (indicator, backgroundable) -> {
             if (tooBigForDiscord.get()) {
-                uploadLongText(text, fileName, fileExtension, settingsState.getShareService(), backgroundable.getProject());
+                uploadLongText(text, fileName, fileExtension, timestamp, settingsState.getShareService(), backgroundable.getProject());
             } else {
-                uploader.uploadCode(text, fileExtension, handleUploadResult());
+                uploader.uploadCode(text, fileName, fileExtension, timestamp, handleUploadResult());
             }
         });
     }
 
-    private void uploadLongText(String text, String fileName, String fileExtension, LargeShareService service, Project project) {
+    private void uploadLongText(String text, String fileName, String fileExtension, long timestamp, LargeShareService service, Project project) {
         if (service == LargeShareService.GITHUB_GIST && service.isAvailable()) {
             GistUploader gistUploader = ServiceManager.getService(GistUploader.class);
 
@@ -88,7 +89,7 @@ public class DiscordMenu extends ShareMenu {
                 return;
             }
 
-            uploader.uploadText(gistUrl, handleUploadResult());
+            uploader.uploadGistEmbed(fileName, gistUrl, timestamp, handleUploadResult());
         } else if (service == LargeShareService.HASTEBIN && service.isAvailable()) {
             HastebinUploader hasteUploader = ServiceManager.getService(HastebinUploader.class);
 
@@ -100,14 +101,14 @@ public class DiscordMenu extends ShareMenu {
                 return;
             }
 
-            uploader.uploadText("View `" + fileName + "` on hastebin\n" + hasteUrl, handleUploadResult());
+            uploader.uploadHasteEmbed(fileName, hasteUrl, timestamp, handleUploadResult());
         } else {
             byte[] textBytes = text.getBytes(StandardCharsets.UTF_8);
             if (!checkFileSizeLimit(textBytes.length)) {
                 return;
             }
 
-            uploader.uploadFile(textBytes, fileName, handleUploadResult());
+            uploader.uploadFile(textBytes, fileName, timestamp, handleUploadResult());
         }
     }
 
@@ -115,6 +116,8 @@ public class DiscordMenu extends ShareMenu {
     protected void uploadFile(final VirtualFile file, final AnActionEvent event) {
         String fileName = file.getName();
         long fileLength = file.getLength();
+        long timestamp = file.getTimeStamp();
+
         startUploadTask("Beaming to Discord", event.getProject(), (indicator, backgroundable) -> {
             if (!checkFileSizeLimit(fileLength)) {
                 return;
@@ -122,7 +125,7 @@ public class DiscordMenu extends ShareMenu {
 
             try {
                 byte[] fileContent = ReadAction.compute(file::contentsToByteArray);
-                uploader.uploadFile(fileContent, fileName, handleUploadResult());
+                uploader.uploadFile(fileContent, fileName, timestamp, handleUploadResult());
             } catch (IOException ex) {
                 handleUploadResult().onFailure(ex);
             }
@@ -134,6 +137,7 @@ public class DiscordMenu extends ShareMenu {
             @Override
             public void onFailure(Throwable ex) {
                 errorNotification(ex.getClass().getName() + " while uploading: " + ex.getMessage());
+                ex.printStackTrace();
             }
         };
     }
