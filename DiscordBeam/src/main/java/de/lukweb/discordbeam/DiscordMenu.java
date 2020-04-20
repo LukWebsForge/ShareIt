@@ -45,7 +45,9 @@ public class DiscordMenu extends ShareMenu {
         AtomicBoolean tooBigForDiscord = new AtomicBoolean(false);
         DiscordSettingsState settingsState = settings.getState();
 
-        if (text.length() > MAX_TEXT_LENGTH) {
+        // Discord doesn't allow to escape three backticks properly, so sadly
+        // we have to use a file sharing service
+        if (text.length() > MAX_TEXT_LENGTH || text.contains("```")) {
             tooBigForDiscord.set(true);
 
             if (!settingsState.isDontAskForService()) {
