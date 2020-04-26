@@ -5,16 +5,12 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import de.lukweb.discordbeam.uploaders.DiscordUploader;
-import de.lukweb.discordbeam.uploaders.GistUploader;
-import de.lukweb.discordbeam.uploaders.HastebinUploader;
-import de.lukweb.discordbeam.uploaders.LargeShareService;
+import de.lukweb.discordbeam.uploaders.*;
 import de.lukweb.share.ShareMenu;
 import de.lukweb.share.ShareResult;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DiscordMenu extends ShareMenu {
 
@@ -42,16 +38,22 @@ public class DiscordMenu extends ShareMenu {
             }
         }
 
-        AtomicBoolean tooBigForDiscord = new AtomicBoolean(false);
+        LargeShareReason reason;
         DiscordSettingsState settingsState = settings.getState();
 
-        // Discord doesn't allow to escape three backticks properly, so sadly
-        // we have to use a file sharing service
-        if (text.length() > MAX_TEXT_LENGTH || text.contains("```")) {
-            tooBigForDiscord.set(true);
+        // Discord doesn't allow to escape three backticks properly, so we have to use a file sharing service
+        boolean isTextTooLong = text.length() > MAX_TEXT_LENGTH;
+        boolean containsUnwantedChars = text.contains("```");
+        if (isTextTooLong || containsUnwantedChars) {
+
+            if (isTextTooLong) {
+                reason = LargeShareReason.TEXT_TOO_LONG;
+            } else {
+                reason = LargeShareReason.FORBIDDEN_CHARACTERS;
+            }
 
             if (!settingsState.isDontAskForService()) {
-                ShareAsFileDialog dialog = new ShareAsFileDialog(settingsState.getShareService());
+                ShareAsFileDialog dialog = new ShareAsFileDialog(settingsState.getShareService(), reason);
 
                 if (!dialog.showAndGet()) {
                     return;
@@ -60,21 +62,25 @@ public class DiscordMenu extends ShareMenu {
                 settingsState.setDontAskForService(dialog.isNeverAskAgain());
                 settingsState.setShareService(dialog.getShareService());
             }
+        } else {
+            reason = null;
         }
 
         String fileName = file.getName();
         String fileExtension = file.getExtension();
         long timestamp = file.getTimeStamp() / 1000;
         startUploadTask(TASK_TITLE, event.getProject(), (indicator, backgroundable) -> {
-            if (tooBigForDiscord.get()) {
-                uploadLongText(text, fileName, fileExtension, timestamp, settingsState.getShareService(), backgroundable.getProject());
+            if (reason != null) {
+                uploadLongText(text, fileName, fileExtension, timestamp,
+                        settingsState.getShareService(), backgroundable.getProject());
             } else {
                 uploader.uploadCode(text, fileName, fileExtension, timestamp, handleUploadResult());
             }
         });
     }
 
-    private void uploadLongText(String text, String fileName, String fileExtension, long timestamp, LargeShareService service, Project project) {
+    private void uploadLongText(String text, String fileName, String fileExtension, long timestamp,
+                                LargeShareService service, Project project) {
         if (service == LargeShareService.GITHUB_GIST && service.isAvailable()) {
             GistUploader gistUploader = ServiceManager.getService(GistUploader.class);
 

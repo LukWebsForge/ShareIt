@@ -1,6 +1,7 @@
 package de.lukweb.discordbeam;
 
 import com.intellij.openapi.ui.DialogWrapper;
+import de.lukweb.discordbeam.uploaders.LargeShareReason;
 import de.lukweb.discordbeam.uploaders.LargeShareService;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,7 +10,7 @@ import javax.swing.*;
 public class ShareAsFileDialog extends DialogWrapper {
 
     private JPanel centerPanel;
-    private JLabel labelLongerThan;
+    private JLabel labelShareReason;
     private JPanel panelRadio;
     private ButtonGroup shareGroup;
     private JRadioButton radioDisFile;
@@ -17,16 +18,12 @@ public class ShareAsFileDialog extends DialogWrapper {
     private JCheckBox buttonAlways;
     private JRadioButton radioHaste;
 
-    public ShareAsFileDialog(LargeShareService service) {
+    public ShareAsFileDialog(LargeShareService service, LargeShareReason reason) {
         super(true);
 
         setOKButtonText("Upload");
-        setTitle("Upload as File or as Github Gist?");
-
-        labelLongerThan.setText(
-                "<html>The code you've selected is longer than " + DiscordMenu.MAX_TEXT_LENGTH + " characters." +
-                        "<br> It can't be sent as a Discord message.</html>"
-        );
+        setTitle("Choose a Upload Service");
+        labelShareReason.setText(reason.getHtmlText());
 
         LargeShareService.applyGistNotAvailable(radioGist);
         LargeShareService.applyHasteStatus(radioHaste);
