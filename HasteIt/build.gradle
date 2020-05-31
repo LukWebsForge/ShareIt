@@ -1,4 +1,4 @@
-version '1.13'
+version '1.14'
 
 intellij {
     // Comment the line below to test with the latest snapshot
@@ -12,6 +12,6 @@ dependencies {
 
 patchPluginXml {
     changeNotes """
-      1.13: Prepares for IDEA version 2020.1 
+      1.14: Minor improvments for reloading the plugin
       """
 }
