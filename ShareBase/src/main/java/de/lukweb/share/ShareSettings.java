@@ -8,7 +8,6 @@ public abstract class ShareSettings<T extends ShareSettingsState> implements Per
     private T settingsState;
 
     public ShareSettings() {
-        this.settingsState = newState();
     }
 
     protected abstract T newState();

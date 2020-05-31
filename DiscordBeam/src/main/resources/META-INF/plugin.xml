@@ -13,6 +13,7 @@
     <!-- Depends tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <!-- https://www.jetbrains.org/intellij/sdk/docs/basics/plugin_structure/plugin_extension_points.html#dynamic-extension-points -->
     <depends optional="true" config-file="plugin-github.xml">org.jetbrains.plugins.github</depends>
     <depends optional="true" config-file="plugin-hastebin.xml">de.lukweb.hasteit</depends>
 
