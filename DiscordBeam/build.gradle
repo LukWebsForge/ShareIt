@@ -13,6 +13,11 @@ intellij {
     plugins = ['github', project(':HasteIt')]
 }
 
+runIde {
+    // Uncomment to generate a stacktrace if the plugin can't be unloaded
+    // jvmArgs = ['-XX:+UnlockDiagnosticVMOptions', '--add-exports', 'java.base/jdk.internal.vm=ALL-UNNAMED']
+}
+
 patchPluginXml {
     changeNotes """
      1.06: Using embeds to share your code 

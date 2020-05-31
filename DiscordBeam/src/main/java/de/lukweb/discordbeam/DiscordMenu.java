@@ -17,17 +17,13 @@ public class DiscordMenu extends ShareMenu {
     public static final int MAX_TEXT_LENGTH = 1950;
     public static final String TASK_TITLE = "Beaming to Discord";
 
-    private final DiscordUploader uploader;
-    private final DiscordSettings settings;
-
     public DiscordMenu() {
         super("DiscordBeam", true);
-        this.uploader = DiscordUploader.getInstance();
-        this.settings = DiscordSettings.getInstance();
     }
 
     @Override
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
+        DiscordSettings settings = DiscordSettings.getInstance();
 
         if (!settings.isWebhookSet()) {
             EnterWebhookDialog dialog = new EnterWebhookDialog(settings.getState().getWebhookUrl());
@@ -74,13 +70,15 @@ public class DiscordMenu extends ShareMenu {
                 uploadLongText(text, fileName, fileExtension, timestamp,
                         settingsState.getShareService(), backgroundable.getProject());
             } else {
-                uploader.uploadCode(text, fileName, fileExtension, timestamp, handleUploadResult());
+                DiscordUploader.getInstance().uploadCode(text, fileName, fileExtension, timestamp, handleUploadResult());
             }
         });
     }
 
     private void uploadLongText(String text, String fileName, String fileExtension, long timestamp,
                                 LargeShareService service, Project project) {
+        DiscordUploader uploader = DiscordUploader.getInstance();
+
         if (service == LargeShareService.GITHUB_GIST && service.isAvailable()) {
             GistUploader gistUploader = ServiceManager.getService(GistUploader.class);
 
@@ -133,7 +131,7 @@ public class DiscordMenu extends ShareMenu {
 
             try {
                 byte[] fileContent = ReadAction.compute(file::contentsToByteArray);
-                uploader.uploadFile(fileContent, fileName, timestamp, handleUploadResult());
+                DiscordUploader.getInstance().uploadFile(fileContent, fileName, timestamp, handleUploadResult());
             } catch (IOException ex) {
                 handleUploadResult().onFailure(ex);
             }

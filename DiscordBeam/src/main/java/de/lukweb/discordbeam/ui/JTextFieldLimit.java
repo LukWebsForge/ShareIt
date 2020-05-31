@@ -6,7 +6,7 @@ import javax.swing.text.PlainDocument;
 
 public class JTextFieldLimit extends PlainDocument {
 
-    private int limit;
+    private final int limit;
 
     public JTextFieldLimit(int limit) {
         super();

@@ -12,7 +12,7 @@ public enum LargeShareService {
     GITHUB_GIST("Github Gist"),
     ;
 
-    private String name;
+    private final String name;
 
     LargeShareService(String name) {
         this.name = name;

@@ -15,18 +15,15 @@ import java.net.URL;
 
 public class HasteMenu extends ShareMenu {
 
-    private HasteUploader uploader;
-
     public HasteMenu() {
         super("HasteIt", false);
-        uploader = HasteUploader.getInstance();
     }
 
     @Override
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
         String fileExtension = file.getExtension();
         startUploadTask("Uploading to Hastebin", event.getProject(), (indicator, backgroundable) -> {
-            uploader.upload(text, fileExtension, new HasteUploader.HasteResult() {
+            HasteUploader.getInstance().upload(text, fileExtension, new HasteUploader.HasteResult() {
                 @Override
                 public void onHaste(String hasteUrl) {
                     copyToClipboard(hasteUrl);

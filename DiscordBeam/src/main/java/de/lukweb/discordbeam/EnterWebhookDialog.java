@@ -6,17 +6,14 @@ import de.lukweb.discordbeam.ui.UrlValidator;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class EnterWebhookDialog extends DialogWrapper {
 
     private URL supportUrl;
-    private UrlValidator validator;
+    private final UrlValidator validator;
 
     private JPanel centerPanel;
     private JTextField urlTextField;

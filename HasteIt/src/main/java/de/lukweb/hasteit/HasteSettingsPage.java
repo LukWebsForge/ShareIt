@@ -11,17 +11,11 @@ import javax.swing.event.DocumentEvent;
 
 public class HasteSettingsPage implements Configurable {
 
-    private HasteSettings settings;
-
     private JPanel panelMain;
     private JCheckBox checkUseCustomHaste;
     private JLabel labelHasteUrl;
     private JTextField textHasteUrl;
     private JLabel labelUrlError;
-
-    public HasteSettingsPage(HasteSettings settings) {
-        this.settings = settings;
-    }
 
     @Override
     public String getDisplayName() {
@@ -45,7 +39,7 @@ public class HasteSettingsPage implements Configurable {
 
     @Override
     public boolean isModified() {
-        String customBefore = settings.getCustomUrl();
+        String customBefore = HasteSettings.getInstance().getCustomUrl();
         String customNow = checkUseCustomHaste.isSelected() ? textHasteUrl.getText() : null;
 
         if (customBefore == null && customNow == null) {
@@ -69,6 +63,7 @@ public class HasteSettingsPage implements Configurable {
 
     @Override
     public void apply() {
+        HasteSettings settings = HasteSettings.getInstance();
         if (checkUseCustomHaste.isSelected()) {
             String url = textHasteUrl.getText();
             settings.setBaseUrl(url);
@@ -83,6 +78,7 @@ public class HasteSettingsPage implements Configurable {
     }
 
     private void loadFromSettings() {
+        HasteSettings settings = HasteSettings.getInstance();
         if (settings.getCustomUrl() != null) {
             checkUseCustomHaste.setSelected(true);
         } else {

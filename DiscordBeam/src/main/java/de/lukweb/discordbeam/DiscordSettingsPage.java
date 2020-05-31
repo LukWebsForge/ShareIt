@@ -19,7 +19,6 @@ import javax.swing.event.DocumentEvent;
 
 public class DiscordSettingsPage implements SearchableConfigurable {
 
-    private DiscordSettings settings;
     private Disposable disposable;
 
     private JPanel panelSettings;
@@ -38,7 +37,6 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     private ButtonGroup shareVia;
 
     public DiscordSettingsPage(DiscordSettings settings) {
-        this.settings = settings;
         this.disposable = Disposer.newDisposable();
     }
 
@@ -115,7 +113,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
-        DiscordSettingsState settingsState = settings.getState();
+        DiscordSettingsState settingsState = DiscordSettings.getInstance().getState();
 
         if (isModified(checkDontAskForService, settingsState.isDontAskForService())) {
             return true;
@@ -142,7 +140,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
     @Override
     public void reset() {
-        DiscordSettingsState settingsState = settings.getState();
+        DiscordSettingsState settingsState = DiscordSettings.getInstance().getState();
 
         editWebHookUrl.setText(settingsState.getWebhookUrl());
         editUserName.setText(settingsState.getUserName());
@@ -175,7 +173,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
             throw new ConfigurationException("Your custom name is too long. A maximum of 80 characters is allowed.", "Custom Name");
         }
 
-        DiscordSettingsState settingsState = settings.getState();
+        DiscordSettingsState settingsState = DiscordSettings.getInstance().getState();
 
         settingsState.setShareService(getSelectedShareService());
         settingsState.setDontAskForService(checkDontAskForService.isSelected());
