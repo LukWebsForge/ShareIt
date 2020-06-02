@@ -14,7 +14,8 @@ import java.nio.charset.StandardCharsets;
 
 public class DiscordMenu extends ShareMenu {
 
-    public static final int MAX_TEXT_LENGTH = 1950;
+    // See: https://discordjs.guide/popular-topics/embeds.html#editing-the-embedded-message-content
+    public static final int MAX_TEXT_LENGTH = 1024;
     public static final String TASK_TITLE = "Beaming to Discord";
 
     public DiscordMenu() {
@@ -35,11 +36,17 @@ public class DiscordMenu extends ShareMenu {
         }
 
         LargeShareReason reason;
-        DiscordSettingsState settingsState = settings.getState();
+        String fileExtension = file.getExtension();
 
-        // Discord doesn't allow to escape three backticks properly, so we have to use a file sharing service
-        boolean isTextTooLong = text.length() > MAX_TEXT_LENGTH;
+        // Discord doesn't allow embed content longer than 1024 chars,
+        // this includes backticks and line breaks
+        boolean isTextTooLong = DiscordUploader.getInstance()
+                .buildEmbedCode(text, fileExtension).length() > MAX_TEXT_LENGTH;
+
+        // Discord doesn't allow to escape three backticks properly,
+        // so we have to use a file sharing service
         boolean containsUnwantedChars = text.contains("```");
+
         if (isTextTooLong || containsUnwantedChars) {
 
             if (isTextTooLong) {
@@ -48,6 +55,7 @@ public class DiscordMenu extends ShareMenu {
                 reason = LargeShareReason.FORBIDDEN_CHARACTERS;
             }
 
+            DiscordSettingsState settingsState = settings.getState();
             if (!settingsState.isDontAskForService()) {
                 ShareAsFileDialog dialog = new ShareAsFileDialog(settingsState.getShareService(), reason);
 
@@ -62,13 +70,14 @@ public class DiscordMenu extends ShareMenu {
             reason = null;
         }
 
+        // Getting the last pieces of information about the file
         String fileName = file.getName();
-        String fileExtension = file.getExtension();
         long timestamp = file.getTimeStamp() / 1000;
+
         startUploadTask(TASK_TITLE, event.getProject(), (indicator, backgroundable) -> {
             if (reason != null) {
                 uploadLongText(text, fileName, fileExtension, timestamp,
-                        settingsState.getShareService(), backgroundable.getProject());
+                        settings.getState().getShareService(), backgroundable.getProject());
             } else {
                 DiscordUploader.getInstance().uploadCode(text, fileName, fileExtension, timestamp, handleUploadResult());
             }

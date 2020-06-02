@@ -85,14 +85,18 @@ public class DiscordUploader {
         postJson(embed, result);
     }
 
-    public void uploadCode(String text, String fileName, String extension, long timestamp, ShareResult result) {
+    public String buildEmbedCode(String text, String extension) {
         String markdownLanguage = extension;
         FileExtensionMarkdownLanguage language = FileExtensionMarkdownLanguage.getByExtension(extension);
         if (language != null) {
             markdownLanguage = language.getLanguage();
         }
 
-        String codeInMd = "```" + markdownLanguage + "\n" + text + "\n```";
+        return "```" + markdownLanguage + "\n" + text + "\n```";
+    }
+
+    public void uploadCode(String text, String fileName, String extension, long timestamp, ShareResult result) {
+        String codeInMd = buildEmbedCode(text, extension);
 
         DiscordEmbed embed = new DiscordEmbed();
         embed.setColor(COLOR_BLUE_CRAYOLA);
