@@ -1,4 +1,4 @@
-version '1.06'
+version '1.07'
 
 dependencies {
     compile project(':ShareBase')
@@ -20,6 +20,6 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-     1.06: Using embeds to share your code 
+     1.07: Updates the limit length for code in embeds
      """
 }
