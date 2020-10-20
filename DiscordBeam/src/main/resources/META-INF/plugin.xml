@@ -23,6 +23,7 @@
                              instance="de.lukweb.discordbeam.DiscordSettingsPage"/>
         <applicationService serviceImplementation="de.lukweb.discordbeam.DiscordSettings"/>
         <applicationService serviceImplementation="de.lukweb.discordbeam.uploaders.DiscordUploader"/>
+        <notificationGroup id="DiscordBeam" displayType="balloon" isLogByDefault="false"/>
     </extensions>
 
     <actions>

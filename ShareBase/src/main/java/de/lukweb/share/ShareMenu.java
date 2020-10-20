@@ -1,7 +1,7 @@
 package de.lukweb.share;
 
-import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
+import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -20,12 +20,11 @@ import java.util.function.BiConsumer;
 
 public abstract class ShareMenu extends AnAction {
 
-    private NotificationGroup notificationGroup;
-    private boolean allowAllFiles;
+    private final NotificationGroup notificationGroup;
+    private final boolean allowAllFiles;
 
     public ShareMenu(String notificationId, boolean allowAllFiles) {
-        this.notificationGroup =
-                new NotificationGroup(notificationId, NotificationDisplayType.BALLOON, false);
+        this.notificationGroup = NotificationGroupManager.getInstance().getNotificationGroup(notificationId);
         this.allowAllFiles = allowAllFiles;
     }
 
