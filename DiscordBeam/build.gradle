@@ -1,4 +1,4 @@
-version '1.07'
+version '1.08'
 
 dependencies {
     compile project(':ShareBase')
@@ -20,6 +20,6 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-     1.07: Updates the limit length for code in embeds
+     1.08: Uses a new method of icon loading & the new notification system
      """
 }
