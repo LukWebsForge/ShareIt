@@ -6,6 +6,6 @@ import javax.swing.*;
 
 public interface DiscordBeamIcons {
 
-    Icon UPLOAD_ACTION = IconLoader.getIcon("action.svg");
+    Icon UPLOAD_ACTION = IconLoader.getIcon("action.svg", DiscordBeamIcons.class);
 
 }
