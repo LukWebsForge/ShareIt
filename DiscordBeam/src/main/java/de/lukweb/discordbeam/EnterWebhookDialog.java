@@ -23,7 +23,7 @@ public class EnterWebhookDialog extends DialogWrapper {
         super(true);
 
         try {
-            supportUrl = new URL("https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks");
+            supportUrl = new URL("https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks");
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         }
