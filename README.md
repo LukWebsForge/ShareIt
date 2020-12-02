@@ -10,7 +10,7 @@ Both are plugins for [IDEA](https://www.jetbrains.com/idea/) -based IDEs.
 Those two plugins help you to share files or code with a platform.
 
 * HasteIt - [Hastebin](https://hastebin.com/)
-* DiscordBeam - [Discord](https://discordapp.com/)
+* DiscordBeam - [Discord](https://discord.com/)
 
 That's the reason why both plugins share some code which is located in the [ShareBase](./ShareBase) folder.
 
