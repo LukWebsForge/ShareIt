@@ -23,7 +23,7 @@ import java.util.function.Function;
 public class DiscordUploader {
 
     // https://square.github.io/okhttp/recipes/#posting-a-multipart-request
-    // https://discordapp.com/developers/docs/resources/webhook#execute-webhook
+    // https://discord.com/developers/docs/resources/webhook#execute-webhook
 
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 
