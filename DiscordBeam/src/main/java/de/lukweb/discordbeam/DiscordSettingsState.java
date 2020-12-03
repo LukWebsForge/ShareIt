@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class DiscordSettingsState implements ShareSettingsState {
 
     public static final String DEFAULT_USER_NAME = "Mystic Creature";
+    // TODO: Change the url to discord.com when the CDN has been moved
     public static final String DEFAULT_USER_ICON = "https://cdn.discordapp.com/embed/avatars/0.png";
 
     private String webhookUrl;
