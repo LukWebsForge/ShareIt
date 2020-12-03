@@ -33,8 +33,8 @@ public class UrlValidator {
             return new ValidationInfo(urlCheck, textComponent);
         }
 
-        if (validateWebHook && !url.startsWith("https://discordapp.com/api/webhooks/")) {
-            String message = "A Discord webhook should start with 'https://discordapp.com/api/webhooks/'";
+        if (validateWebHook && !url.startsWith("https://discord.com/api/webhooks/")) {
+            String message = "A Discord webhook should start with 'https://discord.com/api/webhooks/'";
             return new ValidationInfo(message, textComponent).asWarning();
         }
 
