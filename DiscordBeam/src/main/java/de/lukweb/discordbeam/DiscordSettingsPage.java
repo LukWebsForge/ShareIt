@@ -166,7 +166,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         }
         if (!editUserIcon.getText().isEmpty() && userIconCheck != null) {
             editUserIcon.requestFocusInWindow();
-            throw new ConfigurationException(webHookCheck, "Invalid User Icon URL");
+            throw new ConfigurationException(userIconCheck, "Invalid User Icon URL");
         }
         if (editUserName.getText().trim().length() > 80) {
             editUserName.requestFocusInWindow();
