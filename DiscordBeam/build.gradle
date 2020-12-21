@@ -1,4 +1,4 @@
-version '1.2.0'
+version '1.20.0'
 
 dependencies {
     compile project(':ShareBase')
@@ -20,6 +20,6 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-     1.2.0: Switch to semantic versioning
+     1.20.0: Switch to semantic versioning
      """
 }
