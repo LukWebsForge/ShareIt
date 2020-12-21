@@ -2,7 +2,7 @@ version '1.09'
 
 dependencies {
     compile project(':ShareBase')
-    compile 'com.squareup.okhttp3:okhttp:4.2.2'
+    compile 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 
 intellij {
