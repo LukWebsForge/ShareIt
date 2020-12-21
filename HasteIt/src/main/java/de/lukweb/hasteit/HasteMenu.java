@@ -15,8 +15,10 @@ import java.net.URL;
 
 public class HasteMenu extends ShareMenu {
 
+    private static final String NOTIFICATION_ID = "Haste It";
+
     public HasteMenu() {
-        super("HasteIt", false);
+        super(NOTIFICATION_ID, false);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class HasteMenu extends ShareMenu {
 
     private void notifySuccess(String url) {
         getNotificationGroup().createNotification(
-                "HasteIt",
+                NOTIFICATION_ID,
                 "Upload successful, link copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
                 NotificationType.INFORMATION,
                 (notification, hyperlinkEvent) -> {
