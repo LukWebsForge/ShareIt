@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>de.lukweb.discordbeam</id>
     <name>DiscordBeam</name>
-    <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">LukWeb</vendor>
+    <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">Lukas Arnold</vendor>
 
     <description><![CDATA[
     Share files and code with one click to your <a href="https://discord.com/">Discord</a> server.

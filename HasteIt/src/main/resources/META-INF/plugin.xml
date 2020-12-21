@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>de.lukweb.hasteit</id>
     <name>HasteIt</name>
-    <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">LukWeb</vendor>
+    <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">Lukas Arnold</vendor>
 
     <description><![CDATA[
     Share files and code with one click to <a href="http://hastebin.com">hastebin</a>.
