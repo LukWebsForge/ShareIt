@@ -46,7 +46,7 @@ public class HasteMenu extends ShareMenu {
     private void notifySuccess(String url) {
         getNotificationGroup().createNotification(
                 "HasteIt",
-                "Upload successful, copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
+                "Upload successful, link copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
                 NotificationType.INFORMATION,
                 (notification, hyperlinkEvent) -> {
                     if (!hyperlinkEvent.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) return;

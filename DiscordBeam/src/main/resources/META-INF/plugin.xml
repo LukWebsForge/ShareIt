@@ -28,7 +28,7 @@
 
     <actions>
         <action id="DiscordBeam.Share" class="de.lukweb.discordbeam.DiscordMenu" text="Beam to Discord"
-                description="Share your (selected) text to Discord!" icon="DiscordBeamIcons.UPLOAD_ACTION">
+                description="Share text to Discord" icon="DiscordBeamIcons.UPLOAD_ACTION">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>

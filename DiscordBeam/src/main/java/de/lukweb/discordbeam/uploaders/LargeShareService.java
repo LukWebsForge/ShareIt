@@ -36,7 +36,7 @@ public enum LargeShareService {
     public static void applyGistNotAvailable(JRadioButton radioButton) {
         if (!GITHUB_GIST.isAvailable()) {
             radioButton.setEnabled(false);
-            radioButton.setToolTipText("You can't share via GitHub, because the GitHub plugin is disabled");
+            radioButton.setToolTipText("Enable the GitHub plugin to share your code using Gists");
         }
     }
 

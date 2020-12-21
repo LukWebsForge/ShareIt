@@ -160,7 +160,7 @@ public class DiscordMenu extends ShareMenu {
     private boolean checkFileSizeLimit(long fileLength) {
         boolean tooBig = fileLength >= 1024 * 1024 * 8;
         if (tooBig) {
-            errorNotification("You can only upload files up to 8MB");
+            errorNotification("Discord only allows files with a size up to 8 MB");
             return false;
         }
 
