@@ -1,6 +1,7 @@
 package de.lukweb.hasteit;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.intellij.openapi.components.ServiceManager;
 import de.lukweb.share.ShareResult;
@@ -51,7 +52,7 @@ public class HasteUploader {
             String hasteCode = json.getAsJsonObject().get("key").getAsString();
             result.onHaste(settings.getFileUrl(hasteCode, extension));
             result.onSuccess();
-        } catch (IOException e) {
+        } catch (IOException | JsonParseException e) {
             result.onFailure(e);
         }
     }
