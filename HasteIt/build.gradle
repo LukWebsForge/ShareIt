@@ -1,7 +1,7 @@
-version '1.16'
+version '1.2.0'
 
 intellij {
-    // Comment the line below to test with the latest snapshot
+    // Uncomment the line below to test with the latest snapshot
     // version 'LATEST-EAP-SNAPSHOT'
     pluginName 'HasteIt'
 }
@@ -12,6 +12,6 @@ dependencies {
 
 patchPluginXml {
     changeNotes """
-      1.16: Introduces a new configuration page & Improves wording 
+      1.2.0: Switch to semantic versioning 
       """
 }

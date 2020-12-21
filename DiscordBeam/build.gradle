@@ -1,4 +1,4 @@
-version '1.09'
+version '1.2.0'
 
 dependencies {
     compile project(':ShareBase')
@@ -6,7 +6,7 @@ dependencies {
 }
 
 intellij {
-    // Comment the line below to test with the latest snapshot
+    // Uncomment the line below to test with the latest snapshot
     // version 'LATEST-EAP-SNAPSHOT'
     updateSinceUntilBuild false
     pluginName 'DiscordBeam'
@@ -20,6 +20,6 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-     1.09: Switches to the new discord.com URL & Improves wording
+     1.2.0: Switch to semantic versioning
      """
 }
