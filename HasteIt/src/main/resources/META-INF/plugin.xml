@@ -4,8 +4,7 @@
     <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">LukWeb</vendor>
 
     <description><![CDATA[
-      With HasteIt you can quickly share your current file or selected text to
-       <a href="http://hastebin.com">Hastebin</a>.
+    Share files and code with one click to <a href="http://hastebin.com">hastebin</a>.
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
@@ -24,7 +23,7 @@
     </extensions>
 
     <actions>
-        <action id="HasteIt.Share" class="de.lukweb.hasteit.HasteMenu" text="Haste It!"
+        <action id="HasteIt.Share" class="de.lukweb.hasteit.HasteMenu" text="Haste It"
                 description="Share text to hastebin" icon="HasteItIcons.UPLOAD_ACTION">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
