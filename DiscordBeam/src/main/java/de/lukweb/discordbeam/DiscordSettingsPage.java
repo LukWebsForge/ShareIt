@@ -8,9 +8,10 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.components.JBTextField;
 import de.lukweb.discordbeam.ui.JTextFieldLimit;
-import de.lukweb.discordbeam.ui.UrlValidator;
+import de.lukweb.discordbeam.ui.WebhookValidator;
 import de.lukweb.discordbeam.uploaders.LargeShareService;
 import de.lukweb.share.ShareWebTools;
+import de.lukweb.share.UrlValidator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,9 +58,9 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         panelDiscord.setBorder(IdeBorderFactory.createTitledBorder("Discord Settings"));
         panelLongCode.setBorder(IdeBorderFactory.createTitledBorder("Share Long Code via..."));
 
-        labelUserName.setLabelFor(editUserName);
-        UrlValidator.installOn(this.disposable, true, editWebHookUrl);
+        WebhookValidator.installOn(this.disposable, editWebHookUrl);
 
+        labelUserName.setLabelFor(editUserName);
         editUserName.getEmptyText().setText(DiscordSettingsState.DEFAULT_USER_NAME);
         editUserName.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_USER_NAME);
         editUserName.setDocument(new JTextFieldLimit(80));
@@ -71,8 +72,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
         });
 
         labelUserIcon.setLabelFor(editUserIcon);
-        UrlValidator.installOn(this.disposable, false, editUserIcon);
-
+        UrlValidator.installOn(this.disposable, editUserIcon);
         editUserIcon.getEmptyText().setText(DiscordSettingsState.DEFAULT_USER_ICON);
         editUserIcon.setTextToTriggerEmptyTextStatus(DiscordSettingsState.DEFAULT_USER_ICON);
 

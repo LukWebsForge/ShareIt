@@ -2,7 +2,7 @@ package de.lukweb.discordbeam;
 
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
-import de.lukweb.discordbeam.ui.UrlValidator;
+import de.lukweb.discordbeam.ui.WebhookValidator;
 import de.lukweb.share.ShareWebTools;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +13,7 @@ import java.net.URL;
 public class EnterWebhookDialog extends DialogWrapper {
 
     private URL supportUrl;
-    private final UrlValidator validator;
+    private final WebhookValidator validator;
 
     private JPanel centerPanel;
     private JTextField urlTextField;
@@ -29,7 +29,7 @@ public class EnterWebhookDialog extends DialogWrapper {
         }
 
         urlTextField.setText(oldWebhookUrl);
-        validator = new UrlValidator(urlTextField, true);
+        validator = new WebhookValidator(urlTextField);
 
         setTitle("Enter a Webhook Url");
         init();
@@ -64,6 +64,9 @@ public class EnterWebhookDialog extends DialogWrapper {
     @Nullable
     @Override
     protected ValidationInfo doValidate() {
+        if (urlTextField.getText().isEmpty()) {
+            return null;
+        }
         return validator.validate();
     }
 

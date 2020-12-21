@@ -21,7 +21,7 @@ public class HasteUploader {
         HasteSettings settings = HasteSettings.getInstance();
 
         try {
-            URL obj = new URL(settings.getUploadUrl());
+            URL obj = new URL(settings.computeUploadURL());
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             // Add a reuqest header
@@ -50,7 +50,7 @@ public class HasteUploader {
             }
 
             String hasteCode = json.getAsJsonObject().get("key").getAsString();
-            result.onHaste(settings.getFileUrl(hasteCode, extension));
+            result.onHaste(settings.computeFileURL(hasteCode, extension));
             result.onSuccess();
         } catch (IOException | JsonParseException e) {
             result.onFailure(e);

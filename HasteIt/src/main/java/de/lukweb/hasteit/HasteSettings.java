@@ -4,6 +4,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import de.lukweb.share.ShareSettings;
+import org.jetbrains.annotations.NotNull;
 
 @State(
         name = "HasteSettings",
@@ -12,6 +13,8 @@ import de.lukweb.share.ShareSettings;
         )
 )
 public class HasteSettings extends ShareSettings<HasteSettingsState> {
+
+    public static final String DEFAULT_URL = "https://hastebin.com";
 
     public static HasteSettings getInstance() {
         return ServiceManager.getService(HasteSettings.class);
@@ -22,33 +25,33 @@ public class HasteSettings extends ShareSettings<HasteSettingsState> {
         return new HasteSettingsState();
     }
 
-    public String getCustomUrl() {
-        return getState().getCustomUrl();
-    }
+    public String getBaseURL() {
+        String customUrl = getState().getCustomUrl();
 
-    public String getBaseUrl() {
-        if (getCustomUrl() != null) {
-            return getCustomUrl();
+        // A migration for the older versions of this plugin which store the default URL as null
+        if (customUrl == null) {
+            setBaseURL(DEFAULT_URL);
+            return DEFAULT_URL;
         }
-        return "https://hastebin.com";
+
+        return customUrl;
     }
 
-    public String getUploadUrl() {
-        return getBaseUrl() + "/documents";
-    }
-
-    public String getFileUrl(String hasteCode, String extension) {
-        return getBaseUrl() + "/" + hasteCode + "." + extension;
-    }
-
-    public void setBaseUrl(String url) {
-        // Trims the last slash:
-        // A url without a slash at the end is needed, because we append a path to the url.
-        if (url != null && url.endsWith("/")) {
+    public void setBaseURL(@NotNull String url) {
+        // Trims the last slash of the url, because we append one if we need it.
+        if (url.endsWith("/")) {
             url = url.substring(0, url.length() - 1);
         }
 
         getState().setCustomUrl(url);
+    }
+
+    public String computeUploadURL() {
+        return getBaseURL() + "/documents";
+    }
+
+    public String computeFileURL(String hasteCode, String extension) {
+        return getBaseURL() + "/" + hasteCode + "." + extension;
     }
 
 }

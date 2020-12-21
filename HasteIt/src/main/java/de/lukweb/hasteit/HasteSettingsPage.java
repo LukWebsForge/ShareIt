@@ -1,117 +1,114 @@
 package de.lukweb.hasteit;
 
-import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.Disposable;
+import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.components.JBTextField;
 import de.lukweb.share.ShareWebTools;
+import de.lukweb.share.UrlValidator;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 
-public class HasteSettingsPage implements Configurable {
+public class HasteSettingsPage implements SearchableConfigurable {
+
+    private final Disposable disposable;
 
     private JPanel panelMain;
-    private JCheckBox checkUseCustomHaste;
     private JLabel labelHasteUrl;
-    private JTextField textHasteUrl;
-    private JLabel labelUrlError;
+    private JBTextField textHasteUrl;
+    private JButton buttonReset;
+
+    public HasteSettingsPage() {
+        disposable = Disposer.newDisposable();
+    }
+
+    @Override
+    public @NotNull
+    @NonNls
+    String getId() {
+        return "hasteit";
+    }
 
     @Override
     public String getDisplayName() {
-        return "HasteIt";
+        return "Haste It";
     }
 
     @Nullable
     @Override
     public JComponent createComponent() {
-        loadFromSettings();
-
-        checkUseCustomHaste.addActionListener(e -> checkEnableInput());
+        labelHasteUrl.setLabelFor(textHasteUrl);
+        UrlValidator.installOn(this.disposable, textHasteUrl);
+        textHasteUrl.getEmptyText().setText(HasteSettings.DEFAULT_URL);
+        textHasteUrl.setTextToTriggerEmptyTextStatus(HasteSettings.DEFAULT_URL);
         textHasteUrl.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
             protected void textChanged(@NotNull DocumentEvent e) {
-                checkInputUrlCorrect();
+                updateResetButton();
             }
         });
+
+        buttonReset.addActionListener(l -> textHasteUrl.setText(HasteSettings.DEFAULT_URL));
+
+        reset();
+        updateResetButton();
+
         return panelMain;
     }
 
     @Override
-    public boolean isModified() {
-        String customBefore = HasteSettings.getInstance().getCustomUrl();
-        String customNow = checkUseCustomHaste.isSelected() ? textHasteUrl.getText() : null;
+    public JComponent getPreferredFocusedComponent() {
+        return textHasteUrl;
+    }
 
-        if (customBefore == null && customNow == null) {
-            return false;
-        } else if (customNow == null) {
-            return true;
-        }
-
-        if (customNow.equals(customBefore)) {
-            return false;
-        }
-
-        if (customNow.isEmpty()) {
-            return false;
-        } else if (labelUrlError.isVisible()) {
-            return false;
-        } else {
-            return true;
-        }
+    private void updateResetButton() {
+        boolean canReset = !textHasteUrl.getText().equals(textHasteUrl.getEmptyText().getText());
+        buttonReset.setEnabled(canReset);
     }
 
     @Override
-    public void apply() {
-        HasteSettings settings = HasteSettings.getInstance();
-        if (checkUseCustomHaste.isSelected()) {
-            String url = textHasteUrl.getText();
-            settings.setBaseUrl(url);
-        } else {
-            settings.setBaseUrl(null);
+    public boolean isModified() {
+        HasteSettings settingsState = HasteSettings.getInstance();
+
+        if (isModified(textHasteUrl, settingsState.getBaseURL())) {
+            return true;
         }
+
+        return false;
     }
 
     @Override
     public void reset() {
-        loadFromSettings();
-    }
-
-    private void loadFromSettings() {
         HasteSettings settings = HasteSettings.getInstance();
-        if (settings.getCustomUrl() != null) {
-            checkUseCustomHaste.setSelected(true);
-        } else {
-            checkUseCustomHaste.setSelected(false);
-        }
-        labelUrlError.setVisible(false);
-        textHasteUrl.setText(settings.getBaseUrl());
-        checkEnableInput();
+        textHasteUrl.setText(settings.getBaseURL());
     }
 
-    private void checkEnableInput() {
-        if (checkUseCustomHaste.isSelected()) {
-            labelHasteUrl.setEnabled(true);
-            textHasteUrl.setEnabled(true);
-        } else {
-            labelHasteUrl.setEnabled(false);
-            textHasteUrl.setEnabled(false);
-        }
-    }
+    @Override
+    public void apply() throws ConfigurationException {
+        String urlCheck = ShareWebTools.checkUrl(textHasteUrl.getText());
 
-    private void checkInputUrlCorrect() {
-        String url = textHasteUrl.getText();
-        String checkResult = ShareWebTools.checkUrl(url);
-        if (url.isEmpty() || checkResult == null || !checkUseCustomHaste.isSelected()) {
-            labelUrlError.setVisible(false);
-        } else {
-            if (!labelUrlError.isVisible()) {
-                labelUrlError.setVisible(true);
-            }
-            if (!labelUrlError.getText().equals(checkResult)) {
-                labelUrlError.setText(checkResult);
-            }
+        if (!textHasteUrl.getText().isEmpty() && urlCheck != null) {
+            textHasteUrl.requestFocusInWindow();
+            throw new ConfigurationException(urlCheck, "Invalid Hastebin URL");
+        }
+
+        HasteSettings settingsState = HasteSettings.getInstance();
+        settingsState.setBaseURL(textHasteUrl.getText());
+
+        if (textHasteUrl.getText().isEmpty()) {
+            settingsState.setBaseURL(HasteSettings.DEFAULT_URL);
+            reset();
         }
     }
 
+    @Override
+    public void disposeUIResources() {
+        disposable.dispose();
+    }
 }
