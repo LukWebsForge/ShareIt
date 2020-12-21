@@ -19,7 +19,7 @@ import javax.swing.event.DocumentEvent;
 
 public class DiscordSettingsPage implements SearchableConfigurable {
 
-    private Disposable disposable;
+    private final Disposable disposable;
 
     private JPanel panelSettings;
     private JPanel panelDiscord;
@@ -36,7 +36,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     private JRadioButton radioHaste;
     private ButtonGroup shareVia;
 
-    public DiscordSettingsPage(DiscordSettings settings) {
+    public DiscordSettingsPage() {
         this.disposable = Disposer.newDisposable();
     }
 

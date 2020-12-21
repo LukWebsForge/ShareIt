@@ -20,7 +20,7 @@
         <projectConfigurable groupId="tools" instance="de.lukweb.hasteit.HasteSettingsPage"/>
         <applicationService serviceImplementation="de.lukweb.hasteit.HasteSettings"/>
         <applicationService serviceImplementation="de.lukweb.hasteit.HasteUploader"/>
-        <notificationGroup id="HasteIt" displayType="balloon" isLogByDefault="false"/>
+        <notificationGroup id="HasteIt" displayType="BALLOON" isLogByDefault="false"/>
     </extensions>
 
     <actions>
