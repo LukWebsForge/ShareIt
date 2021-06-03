@@ -1,11 +1,12 @@
 package de.lukweb.hasteit;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.lukweb.share.ShareMenu;
 
-import javax.swing.event.HyperlinkEvent;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -46,16 +47,12 @@ public class HasteMenu extends ShareMenu {
     }
 
     private void notifySuccess(String url) {
-        getNotificationGroup().createNotification(
-                NOTIFICATION_ID,
+        Notification notification = getNotificationGroup().createNotification(
                 "Upload successful, link copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
-                NotificationType.INFORMATION,
-                (notification, hyperlinkEvent) -> {
-                    if (!hyperlinkEvent.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) return;
-                    openURL(hyperlinkEvent.getURL());
-                }
-
-        ).notify(null);
+                NotificationType.INFORMATION
+        );
+        notification.setListener(NotificationListener.URL_OPENING_LISTENER);
+        notification.notify(null);
     }
 
 
