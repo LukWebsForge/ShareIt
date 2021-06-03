@@ -3,7 +3,7 @@ package de.lukweb.hasteit;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import de.lukweb.share.ShareResult;
 
 import java.io.*;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 public class HasteUploader {
 
     public static HasteUploader getInstance() {
-        return ServiceManager.getService(HasteUploader.class);
+        return ApplicationManager.getApplication().getService(HasteUploader.class);
     }
 
     public void upload(String content, String extension, HasteResult result) {

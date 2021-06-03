@@ -1,6 +1,6 @@
 package de.lukweb.hasteit;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import de.lukweb.share.ShareSettings;
@@ -17,7 +17,7 @@ public class HasteSettings extends ShareSettings<HasteSettingsState> {
     public static final String DEFAULT_URL = "https://hastebin.com";
 
     public static HasteSettings getInstance() {
-        return ServiceManager.getService(HasteSettings.class);
+        return ApplicationManager.getApplication().getService(HasteSettings.class);
     }
 
     @Override

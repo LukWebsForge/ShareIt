@@ -1,6 +1,6 @@
 package de.lukweb.discordbeam;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import de.lukweb.share.ShareSettings;
@@ -14,7 +14,7 @@ import de.lukweb.share.ShareSettings;
 public class DiscordSettings extends ShareSettings<DiscordSettingsState> {
 
     public static DiscordSettings getInstance() {
-        return ServiceManager.getService(DiscordSettings.class);
+        return ApplicationManager.getApplication().getService(DiscordSettings.class);
     }
 
     @Override

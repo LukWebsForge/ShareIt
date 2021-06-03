@@ -1,6 +1,6 @@
 package de.lukweb.discordbeam.uploaders;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 
 import javax.swing.*;
 
@@ -28,7 +28,7 @@ public enum LargeShareService {
         } else if (this == HASTEBIN) {
             return HastebinUploader.works() == HastebinUploader.HastebinServiceStatus.OK;
         } else if (this == GITHUB_GIST) {
-            return ServiceManager.getService(GistUploader.class) != null;
+            return ApplicationManager.getApplication().getService(GistUploader.class) != null;
         }
         return false;
     }

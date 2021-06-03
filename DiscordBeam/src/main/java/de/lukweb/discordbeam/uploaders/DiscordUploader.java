@@ -3,7 +3,7 @@ package de.lukweb.discordbeam.uploaders;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import de.lukweb.discordbeam.DiscordSettings;
 import de.lukweb.discordbeam.DiscordSettingsState;
 import de.lukweb.discordbeam.FileExtensionMarkdownLanguage;
@@ -35,7 +35,7 @@ public class DiscordUploader {
     private static final int COLOR_BLACK_PEARL = 0x1E2327;
 
     public static DiscordUploader getInstance() {
-        return ServiceManager.getService(DiscordUploader.class);
+        return ApplicationManager.getApplication().getService(DiscordUploader.class);
     }
 
     private final OkHttpClient client;

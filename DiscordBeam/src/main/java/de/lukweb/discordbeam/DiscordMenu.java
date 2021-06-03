@@ -1,8 +1,8 @@
 package de.lukweb.discordbeam;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.lukweb.discordbeam.uploaders.*;
@@ -89,7 +89,7 @@ public class DiscordMenu extends ShareMenu {
         DiscordUploader uploader = DiscordUploader.getInstance();
 
         if (service == LargeShareService.GITHUB_GIST && service.isAvailable()) {
-            GistUploader gistUploader = ServiceManager.getService(GistUploader.class);
+            GistUploader gistUploader = ApplicationManager.getApplication().getService(GistUploader.class);
 
             if (!gistUploader.isGithubConfigured()) {
                 warningNotification("Please setup a GitHub account, go to Settings -> Version Control -> GitHub -> +");
@@ -106,7 +106,7 @@ public class DiscordMenu extends ShareMenu {
 
             uploader.uploadGistEmbed(fileName, gistUrl, timestamp, handleUploadResult());
         } else if (service == LargeShareService.HASTEBIN && service.isAvailable()) {
-            HastebinUploader hasteUploader = ServiceManager.getService(HastebinUploader.class);
+            HastebinUploader hasteUploader = ApplicationManager.getApplication().getService(HastebinUploader.class);
 
             String hasteUrl;
             try {
