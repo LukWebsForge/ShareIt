@@ -1,3 +1,5 @@
+import org.jetbrains.changelog.markdownToHTML
+
 version = "1.20.0"
 group = "de.lukweb.share"
 
@@ -5,6 +7,7 @@ plugins {
     java
     idea
     id("org.jetbrains.intellij")
+    id("org.jetbrains.changelog")
 }
 
 repositories {
@@ -35,8 +38,10 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
-            1.20.0: Switch to semantic versioning
-            """.trimIndent()
+            1.20.0:
+            * Switch to semantic versioning
+            * Support for 2021.2
+            """.trimIndent().run { markdownToHTML(this) }
         })
     }
 
