@@ -1,9 +1,10 @@
 package de.lukweb.share;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.PersistentStateComponent;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class ShareSettings<T extends ShareSettingsState> implements PersistentStateComponent<T> {
+public abstract class ShareSettings<T extends ShareSettingsState> implements PersistentStateComponent<T>, Disposable {
 
     private T settingsState;
 
@@ -29,5 +30,10 @@ public abstract class ShareSettings<T extends ShareSettingsState> implements Per
     @Override
     public void noStateLoaded() {
         settingsState = newState();
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

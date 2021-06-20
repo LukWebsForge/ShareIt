@@ -1,6 +1,7 @@
 package de.lukweb.discordbeam;
 
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.util.Disposer;
@@ -39,6 +40,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
     public DiscordSettingsPage() {
         this.disposable = Disposer.newDisposable();
+        Disposer.register(ApplicationManager.getApplication().getService(DiscordSettings.class), disposable);
     }
 
     @NotNull

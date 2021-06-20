@@ -1,6 +1,7 @@
 package de.lukweb.hasteit;
 
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.util.Disposer;
@@ -26,6 +27,7 @@ public class HasteSettingsPage implements SearchableConfigurable {
 
     public HasteSettingsPage() {
         disposable = Disposer.newDisposable();
+        Disposer.register(ApplicationManager.getApplication().getService(HasteSettings.class), disposable);
     }
 
     @Override
