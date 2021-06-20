@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.0"
+version = "1.20.1"
 group = "de.lukweb.share"
 
 plugins {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.1:
+            * Dispose settings view once the IDE shuts down
+            
             1.20.0: 
             * Switch to semantic versioning
             * Support for 2021.2
