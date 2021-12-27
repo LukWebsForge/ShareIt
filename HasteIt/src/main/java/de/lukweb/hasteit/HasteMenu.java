@@ -10,9 +10,6 @@ import de.lukweb.share.ShareMenu;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class HasteMenu extends ShareMenu {
 
@@ -60,14 +57,6 @@ public class HasteMenu extends ShareMenu {
         StringSelection selection = new StringSelection(text);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(selection, selection);
-    }
-
-    private void openURL(URL url) {
-        try {
-            Desktop.getDesktop().browse(url.toURI());
-        } catch (IOException | URISyntaxException e1) {
-            e1.printStackTrace();
-        }
     }
 
 }
