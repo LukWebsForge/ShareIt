@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.1"
+version = "1.20.2"
 group = "de.lukweb.share"
 
 plugins {
@@ -36,6 +36,10 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.2:
+            * Switches the default hastebin URL to [1] because hastebin has been acquired by toptal
+            [1]: https://www.toptal.com/developers/hastebin/
+                
             1.20.1:
             * Dispose settings view once the IDE shuts down
             
