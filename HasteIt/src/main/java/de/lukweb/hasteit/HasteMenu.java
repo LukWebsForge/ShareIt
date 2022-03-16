@@ -1,15 +1,19 @@
 package de.lukweb.hasteit;
 
 import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationListener;
+import com.intellij.notification.NotificationAction;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.lukweb.share.ShareMenu;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class HasteMenu extends ShareMenu {
 
@@ -21,13 +25,15 @@ public class HasteMenu extends ShareMenu {
 
     @Override
     protected void uploadText(String text, VirtualFile file, AnActionEvent event) {
+        String fileName = file.getName();
         String fileExtension = file.getExtension();
+        Project project = getEventProject(event);
         startUploadTask("Uploading to Hastebin", event.getProject(), (indicator, backgroundable) -> {
             HasteUploader.getInstance().upload(text, fileExtension, new HasteUploader.HasteResult() {
                 @Override
                 public void onHaste(String hasteUrl) {
                     copyToClipboard(hasteUrl);
-                    notifySuccess(hasteUrl);
+                    uploadSuccessNotification(hasteUrl, fileName, project);
                 }
 
                 @Override
@@ -43,13 +49,19 @@ public class HasteMenu extends ShareMenu {
         // This won't be called, because we've set allowAllFiles in the constructor to false
     }
 
-    private void notifySuccess(String url) {
+    private void uploadSuccessNotification(String url, String filename, Project project) {
         Notification notification = getNotificationGroup().createNotification(
-                "Upload successful, link copied to clipboard<br/> <a href=\"" + url + "\">Open in Browser</a> ",
+                filename + " successfully uploaded to hastebin. The link has been copied to your clipboard.",
                 NotificationType.INFORMATION
         );
-        notification.setListener(NotificationListener.URL_OPENING_LISTENER);
-        notification.notify(null);
+        notification.addAction(NotificationAction.createSimple("Open in Browser", () -> {
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                errorNotification("Unable to open the URL: " + e.getClass().getName() + " " + e.getMessage());
+            }
+        }));
+        notification.notify(project);
     }
 
 
