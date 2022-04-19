@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.2"
+version = "1.20.3"
 group = "de.lukweb.share"
 
 plugins {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.3:
+            * Removes use of the deprecated message ballon API
+                
             1.20.2:
             * Switches the default hastebin URL to [toptal.com] because hastebin has been acquired by them
             

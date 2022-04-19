@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.2"
+version = "1.20.3"
 group = "de.lukweb.share"
 
 plugins {
@@ -38,8 +38,11 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.3
+            * Builds the plugin using the latest version of the Gradle plugin
+            
             1.20.2:
-            * Upgrade library okhttp to version 4.9.3
+            * Upgrades library okhttp to version 4.9.3
                 
             1.20.1:
             * Dispose settings view once the IDE shuts down
