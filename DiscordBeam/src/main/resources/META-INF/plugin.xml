@@ -8,7 +8,7 @@
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
-    <idea-version since-build="203"/>
+    <idea-version since-build="222"/>
 
     <!-- Depends tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->

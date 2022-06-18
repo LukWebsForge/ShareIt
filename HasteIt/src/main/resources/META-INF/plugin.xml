@@ -4,11 +4,11 @@
     <vendor email="lukas@lukweb.de" url="https://github.com/LukWebsForge/ShareIt">Lukas Arnold</vendor>
 
     <description><![CDATA[
-    Share files and code with one click to <a href="http://hastebin.com">hastebin</a>.
+    Share files and code with one click to <a href="https://www.toptal.com/developers/hastebin/">hastebin</a>.
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
-    <idea-version since-build="203"/>
+    <idea-version since-build="222"/>
 
     <!-- Depends tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->

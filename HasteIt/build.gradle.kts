@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.3"
+version = "1.20.4"
 group = "de.lukweb.share"
 
 plugins {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.4:
+            * Prepares for 2022.2 release 
+                
             1.20.3:
             * Removes use of the deprecated message ballon API
                 
