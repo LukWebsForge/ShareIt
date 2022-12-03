@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 )
 public class HasteSettings extends ShareSettings<HasteSettingsState> {
 
-    public static final String OLD_DEFAULT_URL = "https://hastebin.com";
-    public static final String DEFAULT_URL = "https://www.toptal.com/developers/hastebin";
+    public static final String OLD_DEFAULT_URL = "https://www.toptal.com/developers/hastebin";
+    public static final String DEFAULT_URL = "https://hastebin.com";
 
     public static HasteSettings getInstance() {
         return ApplicationManager.getApplication().getService(HasteSettings.class);
@@ -33,6 +33,7 @@ public class HasteSettings extends ShareSettings<HasteSettingsState> {
         // and a migration for older versions of this plugin which use hastebin.com as the default URL
         if (customUrl == null || customUrl.equalsIgnoreCase(OLD_DEFAULT_URL)) {
             setBaseURL(DEFAULT_URL);
+            customUrl = DEFAULT_URL;
         }
 
         return customUrl;

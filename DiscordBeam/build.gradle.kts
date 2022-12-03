@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.4"
+version = "1.20.5"
 group = "de.lukweb.share"
 
 plugins {
@@ -15,13 +15,13 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     implementation(project(":ShareBase"))
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
@@ -31,13 +31,16 @@ intellij {
     updateSinceUntilBuild.set(false)
 
     pluginName.set("DiscordBeam")
-    plugins.set(listOf("github", project(":HasteIt")))
+    plugins.set(listOf("vcs-github", project(":HasteIt")))
 }
 
 tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.5:
+            * Prepares for 2022.3 release
+                
             1.20.4:
             * Prepares for 2022.2 release
             

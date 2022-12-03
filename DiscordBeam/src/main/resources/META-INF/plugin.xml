@@ -8,9 +8,9 @@
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
-    <idea-version since-build="222"/>
+    <idea-version since-build="223"/>
 
-    <!-- Depends tag for compatibility wih all products:
+    <!-- Depends on tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <!-- https://www.jetbrains.org/intellij/sdk/docs/basics/plugin_structure/plugin_extension_points.html#dynamic-extension-points -->

@@ -28,7 +28,7 @@ public class HasteMenu extends ShareMenu {
         String fileName = file.getName();
         String fileExtension = file.getExtension();
         Project project = getEventProject(event);
-        startUploadTask("Uploading to Hastebin", event.getProject(), (indicator, backgroundable) -> {
+        startUploadTask("Uploading to hastebin", event.getProject(), (indicator, backgroundable) -> {
             HasteUploader.getInstance().upload(text, fileExtension, new HasteUploader.HasteResult() {
                 @Override
                 public void onHaste(String hasteUrl) {

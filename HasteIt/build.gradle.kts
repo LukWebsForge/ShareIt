@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.4"
+version = "1.20.5"
 group = "de.lukweb.share"
 
 plugins {
@@ -15,13 +15,13 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     implementation(project(":ShareBase"))
 }
 
@@ -36,6 +36,10 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.5:
+            * Prepares for 2022.3 release
+            * Switches back to the hastebin.com domain
+                
             1.20.4:
             * Prepares for 2022.2 release 
                 
