@@ -23,12 +23,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: HasteIt:buildPlugin HasteIt:verifyPlugin DiscordBeam:buildPlugin DiscordBeam:verifyPlugin
+        # Cache Gradle files: https://github.com/actions/setup-java#caching-packages-dependencies
+        cache: gradle
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Build HasteIt
+      run: ./gradlew HasteIt:buildPlugin
+
+    - name: Verify HasteIt
+      run: ./gradlew verifyPlugin
+
+    - name: Build DiscordBeam
+      run: ./gradlew DiscordBeam:buildPlugin
+
+    - name: Verify DiscordBeam
+      run: ./gradlew verifyPlugin

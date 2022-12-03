@@ -1,2 +1,0 @@
-language: java
-script: ./gradlew HasteIt:buildPlugin HasteIt:verifyPlugin DiscordBeam:buildPlugin DiscordBeam:verifyPlugin

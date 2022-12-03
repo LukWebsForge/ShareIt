@@ -20,8 +20,6 @@ java {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     implementation(project(":ShareBase"))
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
@@ -64,13 +62,6 @@ tasks {
         module {
             isDownloadJavadoc = true
             isDownloadSources = true
-        }
-    }
-
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events("passed", "skipped", "failed")
         }
     }
 
