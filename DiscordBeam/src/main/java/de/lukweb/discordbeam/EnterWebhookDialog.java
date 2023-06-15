@@ -8,6 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class EnterWebhookDialog extends DialogWrapper {
@@ -23,8 +25,8 @@ public class EnterWebhookDialog extends DialogWrapper {
         super(true);
 
         try {
-            supportUrl = new URL("https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks");
-        } catch (MalformedURLException ex) {
+            supportUrl = new URI("https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks").toURL();
+        } catch (MalformedURLException | URISyntaxException ex) {
             ex.printStackTrace();
         }
 

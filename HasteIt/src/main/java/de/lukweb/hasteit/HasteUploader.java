@@ -8,6 +8,8 @@ import de.lukweb.share.ShareResult;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -21,7 +23,7 @@ public class HasteUploader {
         HasteSettings settings = HasteSettings.getInstance();
 
         try {
-            URL obj = new URL(settings.computeUploadURL());
+            URL obj = new URI(settings.computeUploadURL()).toURL();
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             // Add a request header
@@ -52,7 +54,7 @@ public class HasteUploader {
             String hasteCode = json.getAsJsonObject().get("key").getAsString();
             result.onHaste(settings.computeFileURL(hasteCode, extension));
             result.onSuccess();
-        } catch (IOException | JsonParseException e) {
+        } catch (IOException | JsonParseException | URISyntaxException e) {
             result.onFailure(e);
         }
     }

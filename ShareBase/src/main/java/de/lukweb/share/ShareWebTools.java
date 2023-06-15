@@ -3,6 +3,7 @@ package de.lukweb.share;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -27,7 +28,7 @@ public class ShareWebTools {
         }
 
         try {
-            URL javaUrl = new URL(url);
+            URL javaUrl = new URI(url).toURL();
             javaUrl.toURI();
         } catch (URISyntaxException | MalformedURLException ex) {
             return ex.getMessage();

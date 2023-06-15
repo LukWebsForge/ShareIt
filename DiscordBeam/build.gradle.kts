@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.5"
+version = "1.20.6"
 group = "de.lukweb.share"
 
 plugins {
@@ -21,7 +21,7 @@ java {
 
 dependencies {
     implementation(project(":ShareBase"))
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 }
 
 intellij {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.6:
+            * Prepares for 2023.1 release
+                
             1.20.5:
             * Prepares for 2022.3 release
                 
@@ -56,13 +59,6 @@ tasks {
             * Support for 2021.2
             """.trimIndent().run { markdownToHTML(this) }
         })
-    }
-
-    idea {
-        module {
-            isDownloadJavadoc = true
-            isDownloadSources = true
-        }
     }
 
     publishPlugin {
