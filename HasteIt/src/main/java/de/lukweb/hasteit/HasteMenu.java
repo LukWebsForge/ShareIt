@@ -37,6 +37,11 @@ public class HasteMenu extends ShareMenu {
                 }
 
                 @Override
+                public void onAuthorizationRequired() {
+                    errorNotification("Configure an API key for hastebin in the settings.");
+                }
+
+                @Override
                 public void onFailure(Throwable ex) {
                     errorNotification(ex.getClass().getName() + " while uploading: " + ex.getMessage());
                 }

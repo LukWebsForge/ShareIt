@@ -30,6 +30,9 @@ public class HasteUploader {
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            if (settings.getAPIKey() != null) {
+                con.setRequestProperty("Authorization", "Bearer " + settings.getAPIKey());
+            }
 
             // Send the post request
             con.setDoOutput(true);
@@ -37,6 +40,11 @@ public class HasteUploader {
             wr.write(content);
             wr.flush();
             wr.close();
+
+            if (con.getResponseCode() == 401) {
+                result.onAuthorizationRequired();
+                return;
+            }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -60,6 +68,8 @@ public class HasteUploader {
     }
 
     public interface HasteResult extends ShareResult {
+
+        void onAuthorizationRequired();
 
         void onHaste(String hasteUrl);
 

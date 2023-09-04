@@ -28,6 +28,12 @@ public class HastebinUploaderImpl implements HastebinUploader {
             }
 
             @Override
+            public void onAuthorizationRequired() {
+                theError.set(new IOException("hastebin requires an API key, configure it in the 'Haste It' settings tab"));
+                latch.countDown();
+            }
+
+            @Override
             public void onFailure(Throwable ex) {
                 theError.set(new IOException(ex));
                 latch.countDown();

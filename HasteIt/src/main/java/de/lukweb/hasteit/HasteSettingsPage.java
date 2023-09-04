@@ -1,7 +1,6 @@
 package de.lukweb.hasteit;
 
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -16,6 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class HasteSettingsPage implements SearchableConfigurable {
 
@@ -25,10 +28,13 @@ public class HasteSettingsPage implements SearchableConfigurable {
     private JLabel labelHasteUrl;
     private JBTextField textHasteUrl;
     private JButton buttonReset;
+    private JLabel labelApiKey;
+    private JBTextField textApiKey;
+    private JButton buttonGetApiKey;
 
     public HasteSettingsPage() {
         disposable = Disposer.newDisposable();
-        Disposer.register(ApplicationManager.getApplication().getService(HasteSettings.class), disposable);
+        Disposer.register(HasteSettings.getInstance(), disposable);
     }
 
     @Override
@@ -59,6 +65,22 @@ public class HasteSettingsPage implements SearchableConfigurable {
 
         buttonReset.addActionListener(l -> textHasteUrl.setText(HasteSettings.DEFAULT_URL));
 
+        labelApiKey.setLabelFor(textApiKey);
+        textApiKey.getDocument().addDocumentListener(new DocumentAdapter() {
+            @Override
+            protected void textChanged(@NotNull DocumentEvent e) {
+                updateResetButton();
+            }
+        });
+        buttonGetApiKey.addActionListener(l -> {
+            try {
+                URL docUrl = new URI("https://www.toptal.com/developers/hastebin/documentation").toURL();
+                ShareWebTools.openURL(docUrl);
+            } catch (URISyntaxException | MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         reset();
         updateResetButton();
 
@@ -71,7 +93,12 @@ public class HasteSettingsPage implements SearchableConfigurable {
     }
 
     private void updateResetButton() {
-        boolean canReset = !textHasteUrl.getText().equals(textHasteUrl.getEmptyText().getText());
+        HasteSettings settings = HasteSettings.getInstance();
+
+        boolean canReset =
+                !textHasteUrl.getText().equals(textHasteUrl.getEmptyText().getText()) ||
+                !textApiKey.getText().equals(settings.getAPIKeyOrEmpty());
+
         buttonReset.setEnabled(canReset);
     }
 
@@ -83,6 +110,10 @@ public class HasteSettingsPage implements SearchableConfigurable {
             return true;
         }
 
+        if (Configurable.isFieldModified(textApiKey, settingsState.getAPIKeyOrEmpty())) {
+            return true;
+        }
+
         return false;
     }
 
@@ -90,6 +121,7 @@ public class HasteSettingsPage implements SearchableConfigurable {
     public void reset() {
         HasteSettings settings = HasteSettings.getInstance();
         textHasteUrl.setText(settings.getBaseURL());
+        textApiKey.setText(settings.getAPIKeyOrEmpty());
     }
 
     @Override
@@ -107,6 +139,12 @@ public class HasteSettingsPage implements SearchableConfigurable {
         if (textHasteUrl.getText().isEmpty()) {
             settingsState.setBaseURL(HasteSettings.DEFAULT_URL);
             reset();
+        }
+
+        if (textApiKey.getText().isEmpty()) {
+            settingsState.getState().setAPIKey(null);
+        } else {
+            settingsState.getState().setAPIKey(textApiKey.getText());
         }
     }
 

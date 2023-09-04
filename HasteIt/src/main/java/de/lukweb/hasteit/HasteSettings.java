@@ -53,7 +53,23 @@ public class HasteSettings extends ShareSettings<HasteSettingsState> {
     }
 
     public String computeFileURL(String hasteCode, String extension) {
+        if (getBaseURL().equals(DEFAULT_URL)) {
+            return getBaseURL() + "/share/" + hasteCode + "." + extension;
+        }
+
         return getBaseURL() + "/" + hasteCode + "." + extension;
+    }
+
+    public String getAPIKey() {
+        return getState().getAPIKey();
+    }
+
+    public String getAPIKeyOrEmpty() {
+        if (getAPIKey() == null) {
+            return "";
+        } else {
+            return getAPIKey();
+        }
     }
 
 }

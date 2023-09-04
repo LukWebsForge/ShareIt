@@ -41,7 +41,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
 
     public DiscordSettingsPage() {
         this.disposable = Disposer.newDisposable();
-        Disposer.register(ApplicationManager.getApplication().getService(DiscordSettings.class), disposable);
+        Disposer.register(DiscordSettings.getInstance(), disposable);
     }
 
     @NotNull
