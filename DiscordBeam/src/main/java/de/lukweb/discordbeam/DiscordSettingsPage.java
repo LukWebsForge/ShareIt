@@ -2,6 +2,7 @@ package de.lukweb.discordbeam;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.util.Disposer;
@@ -117,7 +118,7 @@ public class DiscordSettingsPage implements SearchableConfigurable {
     public boolean isModified() {
         DiscordSettingsState settingsState = DiscordSettings.getInstance().getState();
 
-        if (isModified(checkDontAskForService, settingsState.isDontAskForService())) {
+        if (checkDontAskForService.isSelected() != settingsState.isDontAskForService()) {
             return true;
         }
 
@@ -125,15 +126,15 @@ public class DiscordSettingsPage implements SearchableConfigurable {
             return true;
         }
 
-        if (isModified(editWebHookUrl, settingsState.getWebhookUrl())) {
+        if (Configurable.isFieldModified(editWebHookUrl, settingsState.getWebhookUrl())) {
             return true;
         }
 
-        if (isModified(editUserName, settingsState.getUserName())) {
+        if (Configurable.isFieldModified(editUserName, settingsState.getUserName())) {
             return true;
         }
 
-        if (isModified(editUserIcon, settingsState.getUserIcon())) {
+        if (Configurable.isFieldModified(editUserIcon, settingsState.getUserIcon())) {
             return true;
         }
 

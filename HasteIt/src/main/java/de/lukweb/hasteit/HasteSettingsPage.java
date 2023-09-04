@@ -2,6 +2,7 @@ package de.lukweb.hasteit;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.util.Disposer;
@@ -78,7 +79,7 @@ public class HasteSettingsPage implements SearchableConfigurable {
     public boolean isModified() {
         HasteSettings settingsState = HasteSettings.getInstance();
 
-        if (isModified(textHasteUrl, settingsState.getBaseURL())) {
+        if (Configurable.isFieldModified(textHasteUrl, settingsState.getBaseURL())) {
             return true;
         }
 
