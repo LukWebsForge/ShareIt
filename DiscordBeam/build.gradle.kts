@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.7"
+version = "1.20.8"
 group = "de.lukweb.share"
 
 plugins {
@@ -21,7 +21,7 @@ java {
 
 dependencies {
     implementation(project(":ShareBase"))
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }
 
 intellij {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.8:
+            * Prepares for 2024.1 release
+                
             1.20.7:
             * Prepares for 2023.2 release
 
