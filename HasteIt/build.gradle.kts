@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.7"
+version = "1.20.8"
 group = "de.lukweb.share"
 
 plugins {
@@ -36,6 +36,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.8:
+            * Prepares for 2024.1 release
+                
             1.20.7:
             * Prepares for 2023.2 release
             * Implements a new setting to provide an API key for hastebin

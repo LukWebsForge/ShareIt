@@ -1,5 +1,6 @@
 package de.lukweb.discordbeam;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ReadAction;
@@ -8,6 +9,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import de.lukweb.discordbeam.uploaders.*;
 import de.lukweb.share.ShareMenu;
 import de.lukweb.share.ShareResult;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -165,5 +167,10 @@ public class DiscordMenu extends ShareMenu {
         }
 
         return true;
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 }

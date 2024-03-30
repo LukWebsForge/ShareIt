@@ -27,7 +27,7 @@ jobs:
     - name: Set up JDK 20
       uses: actions/setup-java@v3
       with:
-        java-version: '20'
+        java-version: '21'
         distribution: 'temurin'
         # Cache Gradle files: https://github.com/actions/setup-java#caching-packages-dependencies
         cache: gradle

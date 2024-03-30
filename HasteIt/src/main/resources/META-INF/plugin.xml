@@ -8,15 +8,15 @@
     ]]></description>
 
     <!-- Full list of IntelliJ IDEA releases: https://www.jetbrains.com/intellij-repository/releases -->
-    <idea-version since-build="232"/>
+    <idea-version since-build="241"/>
 
-    <!-- Depends tag for compatibility wih all products:
+    <!-- Depends on tag for compatibility wih all products:
          http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable groupId="tools" instance="de.lukweb.hasteit.HasteSettingsPage"/>
+        <projectConfigurable displayName="Haste It" groupId="tools" instance="de.lukweb.hasteit.HasteSettingsPage"/>
         <applicationService serviceImplementation="de.lukweb.hasteit.HasteSettings"/>
         <applicationService serviceImplementation="de.lukweb.hasteit.HasteUploader"/>
         <notificationGroup id="Haste It" displayType="BALLOON" isLogByDefault="false"/>

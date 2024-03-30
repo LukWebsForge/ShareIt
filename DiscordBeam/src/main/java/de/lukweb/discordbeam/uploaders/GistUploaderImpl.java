@@ -20,7 +20,7 @@ import static org.jetbrains.plugins.github.api.data.request.GithubGistRequest.Fi
 public class GistUploaderImpl implements GistUploader {
 
     public boolean isGithubConfigured() {
-        return GHAccountsUtil.getAccounts().size() > 0;
+        return !GHAccountsUtil.getAccounts().isEmpty();
     }
 
     public String shareGist(Project project, String fileName, String content) throws IOException {
