@@ -6,30 +6,45 @@ group = "de.lukweb.share"
 plugins {
     java
     idea
-    id("org.jetbrains.intellij")
+    id("org.jetbrains.intellij.platform")
     id("org.jetbrains.changelog")
 }
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
     implementation(project(":ShareBase"))
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    intellijPlatform {
+        intellijIdeaCommunity(findProperty("idea.version").toString())
+
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+
+        bundledPlugin("org.jetbrains.plugins.github")
+        pluginModule(implementation(project(":HasteIt")))
+    }
 }
 
-intellij {
-    version.set(findProperty("idea.version").toString())
-    updateSinceUntilBuild.set(false)
+intellijPlatform {
+    pluginConfiguration {
+        name = "DiscordBeam"
 
-    pluginName.set("DiscordBeam")
-    plugins.set(listOf("vcs-github", project(":HasteIt")))
+        ideaVersion {
+            untilBuild = provider { null }
+        }
+    }
 }
 
 tasks {

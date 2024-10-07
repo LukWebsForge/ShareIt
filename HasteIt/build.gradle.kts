@@ -6,30 +6,43 @@ group = "de.lukweb.share"
 plugins {
     java
     idea
-    id("org.jetbrains.intellij")
+    id("org.jetbrains.intellij.platform")
     id("org.jetbrains.changelog")
 }
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.2")
     implementation(project(":ShareBase"))
+    intellijPlatform {
+        intellijIdeaCommunity(findProperty("idea.version").toString())
+
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+    }
 }
 
-intellij {
-    version.set(findProperty("idea.version").toString())
-    updateSinceUntilBuild.set(false)
+intellijPlatform {
+    pluginConfiguration {
+        name = "HasteIt"
 
-    pluginName.set("HasteIt")
+        ideaVersion {
+            untilBuild = provider { null }
+        }
+    }
 }
 
 tasks {
