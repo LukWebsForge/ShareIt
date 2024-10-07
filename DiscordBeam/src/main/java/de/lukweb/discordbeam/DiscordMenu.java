@@ -110,6 +110,11 @@ public class DiscordMenu extends ShareMenu {
         } else if (service == LargeShareService.HASTEBIN && service.isAvailable()) {
             HastebinUploader hasteUploader = ApplicationManager.getApplication().getService(HastebinUploader.class);
 
+            if (hasteUploader == null) {
+                errorNotification("The HasteIt plugin is not loaded");
+                return;
+            }
+
             String hasteUrl;
             try {
                 hasteUrl = hasteUploader.shareHaste(text, fileExtension);
