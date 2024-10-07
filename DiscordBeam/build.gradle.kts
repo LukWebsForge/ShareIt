@@ -23,7 +23,6 @@ java {
 }
 
 dependencies {
-    implementation(project(":ShareBase"))
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     intellijPlatform {
         intellijIdeaCommunity(findProperty("idea.version").toString())
@@ -32,8 +31,9 @@ dependencies {
         zipSigner()
         instrumentationTools()
 
+        pluginModule(implementation(project(":ShareBase")))
+        localPlugin(project(":HasteIt"))
         bundledPlugin("org.jetbrains.plugins.github")
-        pluginModule(implementation(project(":HasteIt")))
     }
 }
 
