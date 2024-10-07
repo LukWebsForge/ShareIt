@@ -41,7 +41,7 @@ public class GistUploaderImpl implements GistUploader {
                 .create(server, fileContents, "", false);
 
         return GithubApiRequestExecutor.Factory.getInstance()
-                .create(token)
+                .create(server, token)
                 .execute(gistCreate)
                 .getHtmlUrl();
     }

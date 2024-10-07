@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.8"
+version = "1.20.9"
 group = "de.lukweb.share"
 
 plugins {
@@ -51,6 +51,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.9:    
+            * Prepares for 2024.2 release
+            
             1.20.8:
             * Prepares for 2024.1 release
                 
