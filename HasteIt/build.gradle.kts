@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.9"
+version = "1.20.10"
 group = "de.lukweb.share"
 
 plugins {
@@ -23,16 +23,15 @@ java {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:6.0.3")
     intellijPlatform {
-        intellijIdeaCommunity(findProperty("idea.version").toString())
+        intellijIdea(findProperty("idea.version").toString())
 
         pluginVerifier()
         zipSigner()
-        instrumentationTools()
 
-        pluginModule(implementation(project(":ShareBase")))
+        pluginComposedModule(implementation(project(":ShareBase")))
     }
 }
 
@@ -50,6 +49,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.10:    
+            * Prepares for 2026.1 release
+            
             1.20.9:    
             * Prepares for 2024.2 release
             

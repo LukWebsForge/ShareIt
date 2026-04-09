@@ -20,9 +20,8 @@ java {
 }
 
 dependencies {
-    compileOnly("org.jetbrains:annotations:25.0.0")
+    compileOnly("org.jetbrains:annotations:26.1.0")
     intellijPlatform {
-        intellijIdeaCommunity(findProperty("idea.version").toString())
-        instrumentationTools()
+        intellijIdea(findProperty("idea.version").toString())
     }
 }

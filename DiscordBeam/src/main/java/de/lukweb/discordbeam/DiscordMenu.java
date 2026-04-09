@@ -40,12 +40,12 @@ public class DiscordMenu extends ShareMenu {
         LargeShareReason reason;
         String fileExtension = file.getExtension();
 
-        // Discord doesn't allow embed content longer than 1024 chars,
+        // Discord doesn't allow embedded content longer than 1024 chars,
         // this includes backticks and line breaks
         boolean isTextTooLong = DiscordUploader.getInstance()
                 .buildEmbedCode(text, fileExtension).length() > MAX_TEXT_LENGTH;
 
-        // Discord doesn't allow to escape three backticks properly,
+        // Discord doesn't allow escaping three backticks properly,
         // so we have to use a file sharing service
         boolean containsUnwantedChars = text.contains("```");
 
@@ -146,7 +146,7 @@ public class DiscordMenu extends ShareMenu {
             }
 
             try {
-                byte[] fileContent = ReadAction.compute(file::contentsToByteArray);
+                byte[] fileContent = ReadAction.computeBlocking(file::contentsToByteArray);
                 DiscordUploader.getInstance().uploadFile(fileContent, fileName, timestamp, handleUploadResult());
             } catch (IOException ex) {
                 handleUploadResult().onFailure(ex);

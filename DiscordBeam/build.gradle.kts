@@ -1,6 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
 
-version = "1.20.9"
+version = "1.20.10"
 group = "de.lukweb.share"
 
 plugins {
@@ -23,15 +23,14 @@ java {
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
     intellijPlatform {
-        intellijIdeaCommunity(findProperty("idea.version").toString())
+        intellijIdea(findProperty("idea.version").toString())
 
         pluginVerifier()
         zipSigner()
-        instrumentationTools()
 
-        pluginModule(implementation(project(":ShareBase")))
+        pluginComposedModule(implementation(project(":ShareBase")))
         localPlugin(project(":HasteIt"))
         bundledPlugin("org.jetbrains.plugins.github")
     }
@@ -51,6 +50,9 @@ tasks {
     patchPluginXml {
         changeNotes.set(provider {
             """
+            1.20.10:    
+            * Prepares for 2026.1 release
+                
             1.20.9:    
             * Prepares for 2024.2 release
             
